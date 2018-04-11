@@ -1,7 +1,7 @@
-## Project Proposal
+# Project Proposal
 
-# Carl Guo
-# 4/10/18
+## Carl Guo
+### 4/10/18
 
 For this project, I plan on recreating the game Space Invaders or trying to create something similar
 to that. I believe that this should be doable after seeing how the Snake game worked in openFrameworks.
