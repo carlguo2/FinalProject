@@ -20,3 +20,20 @@ libraries worth looking into from the libraries guide we were given from piazza 
 I have had previous experience with game design. I took CS 199 GAM during Winter 2017 and learned how
 make games and code in Unity. I am not completely sure if Unity will be entirely similar to this
 new game engine library, but I believe the experience I have with Unity will prove useful.
+
+
+
+
+Update: Will use library ofxOSC to be able to connect and toggle game settings with other device.
+Will be a shooter game. 
+With high score list of 5
+Have power ups
+Will add audio so ofSoundPlayer?
+
+Goals: 
+1. Get a working demo of the game (working game with states and scoring)
+2. Add power ups, audio, high score list, if not before then will add player, enemy, bullet, power up bitmaps (custom made or get from internet)
+3. Get OSC functionality to work to be able to toggle difficulty.
+
+Project will reference: http://openframeworks.cc/ofBook/chapters/game_design.html
+
