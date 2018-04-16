@@ -1,39 +1,30 @@
 # Project Proposal
 
 ## Carl Guo
-### 4/10/18
+## 4/10/18
 
-For this project, I plan on recreating the game Space Invaders or trying to create something similar
-to that. I believe that this should be doable after seeing how the Snake game worked in openFrameworks.
-I plan on having this game be similar to space invaders but possibly with less enemies and without cover
-to protect the player. The game will be the same as the actual Space Invaders game, by having each wave
-of enemies loop after one wave has been destroyed. Similar to Snake, I plan on implementing different
-game states, a scoring system, and a high score list. However I will also attempt to add audio as well.
-	
-I currently plan on using the Game Engine library Torque 2D games (https://github.com/GarageGames/Torque2D)
-to create my final project. I am not completely sure how I will integrate openFrameworks into it but I will try
-to do some research on that. I believe that the ofxgui from openFrameworks may also be useful as well. In order to 
-learn how to use this game engine I will read the guide they provide (https://github.com/GarageGames/Torque2D/wiki)
-and probably also use the forum (http://www.garagegames.com/community/forums/84). There are also other game engine 
-libraries worth looking into from the libraries guide we were given from piazza (https://github.com/fffaraz/awesome-cpp#game-engine)
+### Project Description
+	For this project I am trying to create a simple [bullet hell game](https://en.wikipedia.org/wiki/Shoot_%27em_up).
+The game will allow the player control a plane will trying to shoot down enemies shooting at you.The wave of enemies
+never end and the score the player gets will be the amount of enemies the player shoots down before dying. This game will include
+a high score list of 5, power ups, and audio (using ofsoundplayer). Using the openFrameworks OSC addon, I will make it so that this game able 
+to be get signals from other devices (such as extra lives for the player or add more enemies to the screen.)
+I got the idea for this project from an [openFrameworks example](http://openframeworks.cc/ofBook/chapters/game_design.html)
 
-I have had previous experience with game design. I took CS 199 GAM during Winter 2017 and learned how
-make games and code in Unity. I am not completely sure if Unity will be entirely similar to this
-new game engine library, but I believe the experience I have with Unity will prove useful.
+### Libraries Needed
+	I will be using the standard openFrameworks ofApp to create the base game and graphics. This will be similar to how the 
+Snake game was programmed: high score list, audio, gamestates. I will use the [ofxOSC](http://openframeworks.cc/documentation/ofxOsc/) addon in order to be able to connect other 
+devices to the game. I will most likely also need to use OpenGL to create a windowed application for this game.
 
-
-
-
-Update: Will use library ofxOSC to be able to connect and toggle game settings with other device.
-Will be a shooter game. 
-With high score list of 5
-Have power ups
-Will add audio so ofSoundPlayer?
-
-Goals: 
+### Goals
+I will split the goals of my project into three steps:
 1. Get a working demo of the game (working game with states and scoring)
 2. Add power ups, audio, high score list, if not before then will add player, enemy, bullet, power up bitmaps (custom made or get from internet)
-3. Get OSC functionality to work to be able to toggle difficulty.
+3. Get OSC functionality to work to be able to add things to the game and make it more difficult or easier.
 
-Project will reference: http://openframeworks.cc/ofBook/chapters/game_design.html
+### Experience 
+I have had previous experience with game design. I took CS 199 GAM during Winter 2017 and learned how
+make games and code in Unity. I am not completely sure if Unity will be entirely similar to this
+new game engine library, but I believe the experience I have with Unity will prove useful. I have also programmed
+a very similar game using javascript before in high school and may use that as reference for creating my base game.
 
