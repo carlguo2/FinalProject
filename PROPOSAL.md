@@ -4,7 +4,7 @@
 ## 4/10/18
 
 ### Project Description
-	For this project I am trying to create a simple [bullet hell game](https://en.wikipedia.org/wiki/Shoot_%27em_up).
+For this project I am trying to create a simple [bullet hell game](https://en.wikipedia.org/wiki/Shoot_%27em_up).
 The game will allow the player control a plane will trying to shoot down enemies shooting at you.The wave of enemies
 never end and the score the player gets will be the amount of enemies the player shoots down before dying. This game will include
 a high score list of 5, power ups, and audio (using ofsoundplayer). Using the openFrameworks OSC addon, I will make it so that this game able 
@@ -12,7 +12,7 @@ to be get signals from other devices (such as extra lives for the player or add 
 I got the idea for this project from an [openFrameworks example](http://openframeworks.cc/ofBook/chapters/game_design.html)
 
 ### Libraries Needed
-	I will be using the standard openFrameworks ofApp to create the base game and graphics. This will be similar to how the 
+I will be using the standard openFrameworks ofApp to create the base game and graphics. This will be similar to how the 
 Snake game was programmed: high score list, audio, gamestates. I will use the [ofxOSC](http://openframeworks.cc/documentation/ofxOsc/) addon in order to be able to connect other 
 devices to the game. I will most likely also need to use OpenGL to create a windowed application for this game.
 
