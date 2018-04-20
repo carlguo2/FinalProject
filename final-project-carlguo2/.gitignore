@@ -265,4 +265,5 @@ icon.rc
 final-project-carlguo.sln
 final-project-carlguo.vcxproj
 final-project-carlguo.vcxproj.filters
+*.png
 

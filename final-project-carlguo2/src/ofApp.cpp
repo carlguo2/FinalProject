@@ -6,7 +6,7 @@ void ofApp::setup(){
 	score_ = 0;
 
 	// instantiate player image
-	player_img_.loadImage("player.png");
+	player_img_.load("player.png");  // turn this into a constant
 	player_.setup(&player_img_);
 }
 
@@ -16,7 +16,8 @@ void ofApp::update(){
 	if (current_state_ == START) {
 
 	} else if (current_state_ == IN_GAME) {
-
+		// update player action
+		player_.update();
 	} else if (current_state_ == END) {
 
 	}
@@ -29,7 +30,7 @@ void ofApp::draw(){
 
 	}
 	else if (current_state_ == IN_GAME) {
-
+		player_.draw();
 	}
 	else if (current_state_ == END) {
 

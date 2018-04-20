@@ -192,7 +192,6 @@
     <ClCompile Include="src\PlayerLife.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="catch.hpp" />
     <ClInclude Include="src\Bullet.h" />
     <ClInclude Include="src\Enemy.h" />
     <ClInclude Include="src\LevelController.h" />
@@ -219,6 +218,7 @@
     <ClInclude Include="..\..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscTypes.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\PlayerLife.h" />
+    <ClInclude Include="test\catch.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">

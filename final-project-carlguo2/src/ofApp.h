@@ -1,5 +1,5 @@
 #pragma once
-
+#include <string.h>
 #include "ofMain.h"
 #include "Bullet.h"  // added game components in
 #include "Enemy.h"

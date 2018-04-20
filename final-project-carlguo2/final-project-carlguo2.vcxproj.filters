@@ -173,7 +173,7 @@
     <ClInclude Include="src\PlayerLife.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="catch.hpp">
+    <ClInclude Include="test\catch.hpp">
       <Filter>test</Filter>
     </ClInclude>
   </ItemGroup>
