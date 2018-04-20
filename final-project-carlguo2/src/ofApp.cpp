@@ -21,9 +21,10 @@ void ofApp::update_bullets_vector() {
 	for (int i = 0; i < bullets_.size(); i++) {
 		// update all the bullets
 		bullets_[i].update();
-		// check when a bullet goes out of screen
-		if (bullets_[i].position_.y - bullets_[i].b_width_ / 2 < 0 ||
-			bullets_[i].position_.y - bullets_[i].b_width_ / 2 > ofGetHeight()) {
+		// check when a bullet goes out of screen   
+		// TODO: Get rid of magic numbers
+		if (bullets_[i].position_.y - bullets_[i].b_width_ / 8 < 0 ||
+			bullets_[i].position_.y - bullets_[i].b_width_ / 8 > ofGetHeight()) {
 			// when bullet about to go out screen, erase it from vector
 			bullets_.erase(bullets_.begin() + i);
 		}
