@@ -2,11 +2,11 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-	current_state_ = START;
+	current_state_ = IN_GAME;
 	score_ = 0;
 
 	// instantiate player image
-	player_img_.load("player.png");  // turn this into a constant
+	player_img_.load("player.png");  //TODO: turn this into a constant
 	player_.setup(&player_img_);
 }
 
@@ -18,6 +18,7 @@ void ofApp::update(){
 	} else if (current_state_ == IN_GAME) {
 		// update player action
 		player_.update();
+
 	} else if (current_state_ == END) {
 
 	}
@@ -40,20 +41,21 @@ void ofApp::draw(){
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
 	// check for the movement buttons
+	// TODO: create constants for these chars
 	if (current_state_ == IN_GAME) {
-		if (key == 'W') {
+		if (key == 'w') {
 			player_.is_w_pressed_ = true;
 		}
 
-		if (key == 'A') {
+		if (key == 'a') {
 			player_.is_a_pressed_ = true;
 		}
 		
-		if (key == 'S') {
+		if (key == 's') {
 			player_.is_s_pressed_ = true;
 		}
 		
-		if (key == 'D') {
+		if (key == 'd') {
 			player_.is_d_pressed_ = true;
 		}
 	}
@@ -68,19 +70,20 @@ void ofApp::keyReleased(int key){
 	}
 	else if (current_state_ == IN_GAME) {
 		// check if key released for movement buttons
-		if (key == 'W') {
+		// TODO: create constants for these chars
+		if (key == 'w') {
 			player_.is_w_pressed_ = false;
 		}
 		
-		if (key == 'A') {
+		if (key == 'a') {
 			player_.is_a_pressed_ = false;
 		}
 		
-		if (key == 'S') {
+		if (key == 's') {
 			player_.is_s_pressed_ = false;
 		}
 		
-		if (key == 'D') {
+		if (key == 'd') {
 			player_.is_d_pressed_ = false;
 		}
 	}
