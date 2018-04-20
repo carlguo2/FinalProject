@@ -1,15 +1,17 @@
 #include "Player.h"
 
-void Player::setup(ofImage* img) {
+void Player::setup(ofImage* img, double wid, double hi,
+	float x, float y, double spd) {
+	// TODO: check for null edge case
 	// set player attributes
-	speed = 5;
+	speed_ = spd;
 
 	// load image of the player
 	player_img = img;
-	width = player_img->getWidth();
-	height = player_img->getWidth();
-	position.x = ofGetWidth() / 2;
-	position.y = ofGetHeight() - height;
+	width_ = wid;
+	height_ = hi;
+	position_.x = x;
+	position_.y = y;
 }
 
 void Player::update() {
@@ -17,7 +19,7 @@ void Player::update() {
 }
 
 void Player::draw() {
-	player_img->draw(position.x - width / 2, position.y - height / 2);
+	player_img->draw(position_.x - width_ / 2, position_.y - height_ / 2);
 }
 
 void Player::shoot() {
@@ -26,18 +28,18 @@ void Player::shoot() {
 
 void Player::calculate_movement() {
 	// if 'a' key is pressed, move left of screen (subtract by x)
-	if (is_a_pressed_ && (position.x - width / 4) > 0) {
+	if (is_a_pressed_ && (position_.x - width_ / 4) > 0) {
 		// move to the left by speed
-		position.x -= speed;
+		position_.x -= speed_;
 	}
-	if (is_d_pressed_ && position.x < (ofGetWidth() - width / 4)) {
-		position.x += speed;
+	if (is_d_pressed_ && position_.x < (ofGetWidth() - width_ / 4)) {
+		position_.x += speed_;
 	}
-	if (is_w_pressed_ && (position.y - height / 2) > 0) {
-		position.y -= speed;
+	if (is_w_pressed_ && (position_.y - height_ / 2) > 0) {
+		position_.y -= speed_;
 	}
-	if (is_s_pressed_ && position.y < (ofGetHeight() - height / 10)) {
-		position.y += speed;
+	if (is_s_pressed_ && position_.y < (ofGetHeight() - height_ / 2)) {
+		position_.y += speed_;
 	}
 }
 

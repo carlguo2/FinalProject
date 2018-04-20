@@ -7,7 +7,10 @@ void ofApp::setup(){
 
 	// instantiate player image
 	player_img_.load("player.png");  //TODO: turn this into a constant
-	player_.setup(&player_img_);
+	float width = player_img_.getWidth();
+	float height = player_img_.getHeight();
+	player_.setup(&player_img_, width, height,
+		ofGetWidth() / 2, ofGetHeight() - height, 5);
 }
 
 //--------------------------------------------------------------
