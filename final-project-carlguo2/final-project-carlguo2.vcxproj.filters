@@ -43,19 +43,19 @@
     <ClCompile Include="..\..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscTypes.cpp">
       <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
     </ClCompile>
-    <ClCompile Include="Bullet.cpp">
+    <ClCompile Include="src\Bullet.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
+    <ClCompile Include="src\Enemy.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerLife.cpp">
+    <ClCompile Include="src\LevelController.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
+    <ClCompile Include="src\Player.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="LevelController.cpp">
+    <ClCompile Include="src\PlayerLife.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -155,23 +155,28 @@
     <ClInclude Include="..\..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscTypes.h">
       <Filter>addons\ofxOsc\libs\oscpack\src\osc</Filter>
     </ClInclude>
-    <ClInclude Include="Bullet.h">
+    <ClInclude Include="src\Bullet.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
+    <ClInclude Include="src\Enemy.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerLife.h">
+    <ClInclude Include="src\LevelController.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
+    <ClInclude Include="src\Player.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="LevelController.h">
+    <ClInclude Include="src\PlayerLife.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\PROPOSAL.md" />
+    <None Include="src\README.md" />
+    <None Include=".gitignore" />
   </ItemGroup>
 </Project>
