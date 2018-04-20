@@ -267,4 +267,4 @@ final-project-carlguo.vcxproj
 final-project-carlguo.vcxproj.filters
 
 # Exclude vs folder
-.vs
+../.vs
