@@ -1,15 +1,14 @@
 #include "Player.h"
 
-void Player::setup(ofImage* img, double wid, double hi,
-	float x, float y, double spd) {
+void Player::setup(ofImage* img, float x, float y, double spd) {
 	// TODO: check for null edge case
 	// set player attributes
 	speed_ = spd;
 
 	// load image of the player
-	player_img = img;
-	width_ = wid;
-	height_ = hi;
+	player_img_ = img;
+	width_ = img->getWidth();
+	height_ = img->getHeight();
 	position_.x = x;
 	position_.y = y;
 }
@@ -19,7 +18,7 @@ void Player::update() {
 }
 
 void Player::draw() {
-	player_img->draw(position_.x - width_ / 2, position_.y - height_ / 2);
+	player_img_->draw(position_.x - width_ / 2, position_.y - height_ / 2);
 }
 
 void Player::shoot() {

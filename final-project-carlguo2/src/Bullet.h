@@ -5,7 +5,7 @@
 class Bullet {
 public:
 	// tracks position of the bullet x and y
-	ofPoint position;
+	ofPoint position_;
 	// set dimensions of the bullet
 	double b_width_;
 	double b_speed_;

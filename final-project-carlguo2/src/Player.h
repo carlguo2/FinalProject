@@ -23,11 +23,11 @@ public:
 	bool is_s_pressed_;
 	bool is_w_pressed_;
 
-	// get image of the player 
-	ofImage* player_img;
+	// get image of objects in the game
+	ofImage* player_img_;
+	ofImage* enemy_bullet_img_;
 
-	void setup(ofImage* _img, double width, double height,
-		float x, float y, double speed);
+	void setup(ofImage* _img, float x, float y, double speed);
 	void update();
 	void draw();
 	void shoot();
