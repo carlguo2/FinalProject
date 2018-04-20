@@ -192,6 +192,7 @@
     <ClCompile Include="src\PlayerLife.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="catch.hpp" />
     <ClInclude Include="src\Bullet.h" />
     <ClInclude Include="src\Enemy.h" />
     <ClInclude Include="src\LevelController.h" />

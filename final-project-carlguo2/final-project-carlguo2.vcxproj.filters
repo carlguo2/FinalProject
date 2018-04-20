@@ -90,6 +90,9 @@
     <Filter Include="addons\ofxOsc\libs\oscpack\src\osc">
       <UniqueIdentifier>{EDACB89C-9768-9551-4D41-B590}</UniqueIdentifier>
     </Filter>
+    <Filter Include="test">
+      <UniqueIdentifier>{f35ddc69-4291-4d8a-85f2-e54f1fd38591}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ofApp.h">
@@ -169,6 +172,9 @@
     </ClInclude>
     <ClInclude Include="src\PlayerLife.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="catch.hpp">
+      <Filter>test</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
