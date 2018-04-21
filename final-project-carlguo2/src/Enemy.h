@@ -15,5 +15,5 @@ public:
 	void setup(float max_amplitude, float max_shoot_interval, ofImage* enemy_img);
 	void update();
 	void draw();
-	bool time_to_shoot;
+	bool time_to_shoot();
 };

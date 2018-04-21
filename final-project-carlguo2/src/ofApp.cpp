@@ -10,6 +10,11 @@ void ofApp::setup(){
 	player_.setup(&player_img_, ofGetWidth() / 2,
 		ofGetHeight() - player_img_.getHeight(), 5);
 
+	// instantiate enemy 
+	max_enemy_amplitude_ = 3.0;
+	max_enemy_shoot_interval_ = 1.5;
+	enemy_img_.load("enemy.png");
+
 	// instantiate bullet images
 	player_bullet_img_.load("player_bullet.png");  // TODO: turn string to constant
 	enemy_bullet_img_.load("enemy_bullet.png");
@@ -43,6 +48,20 @@ void ofApp::update(){
 		player_.update();
 		update_bullets_vector();
 
+		// loop through enemy vector to update each enemy
+		for (int i = 0; i < enemies_.size(); i++) {
+			// have the enemy "move down"
+			enemies_[i].update();
+			// check if enemy can shoot or not
+			if (enemies_[i].time_to_shoot()) {
+				Bullet b;
+				// create the "enemy" bullet to setup
+				b.setup(&enemy_bullet_img_, false,
+					enemies_[i].speed_, enemies_[i].position_);
+				bullets_.push_back(b);
+			}
+		}
+
 	} else if (current_state_ == END) {
 
 	}
@@ -57,9 +76,13 @@ void ofApp::draw(){
 	else if (current_state_ == IN_GAME) {
 		// draw game objects
 		player_.draw();
-		
+		// draw each bullet in vector
 		for (int i = 0; i < bullets_.size(); i++) {
 			bullets_[i].draw();
+		}
+		// draw each enemy in vector
+		for (int i = 0; i < enemies_.size(); i++) {
+			enemies_[i].draw();
 		}
 	}
 	else if (current_state_ == END) {
