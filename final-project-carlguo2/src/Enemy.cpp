@@ -2,12 +2,13 @@
 
 void Enemy::setup(float max_amplitude,
 	float max_shoot_interval, ofImage* enemy_img) {
-	position_.x = ofRandom(ofGetWidth());
-	position_.y = 0;
-
 	img_ = enemy_img;
 	width_ = img_->getWidth();
-	speed_ = ofRandom(2, 7);
+	speed_ = ofRandom(2, 4);
+
+	// set position
+	position_.x = ofRandom(width_ / 2, ofGetWidth() - width_ / 2);
+	position_.y = 0;
 
 	// amplitude of movement on x plane
 	amplitude_ = ofRandom(max_amplitude);
@@ -20,8 +21,6 @@ void Enemy::setup(float max_amplitude,
 void Enemy::update() {
 	// update enemy to move down
 	position_.y += speed_;
-	// have enemy move in sine wave motion
-	position_.x += amplitude_ * sin(ofGetElapsedTimef());;
 }
 
 void Enemy::draw() {

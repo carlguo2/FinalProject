@@ -8,7 +8,7 @@ void ofApp::setup(){
 	// instantiate player image
 	player_img_.load("player.png");  //TODO: turn this into a constant
 	player_.setup(&player_img_, ofGetWidth() / 2,
-		ofGetHeight() - player_img_.getHeight(), 5);
+		ofGetHeight() - player_img_.getHeight() / 2, 5);
 
 	// instantiate enemy 
 	max_enemy_amplitude_ = 3.0;
@@ -19,6 +19,11 @@ void ofApp::setup(){
 	player_bullet_img_.load("player_bullet.png");  // TODO: turn string to constant
 	enemy_bullet_img_.load("enemy_bullet.png");
 
+
+	// test to see if enemy can work or not.
+	Enemy e;
+	e.setup(max_enemy_amplitude_, max_enemy_shoot_interval_, &enemy_img_);
+	enemies_.push_back(e);
 }
 
 void ofApp::update_bullets_vector() {
@@ -52,13 +57,20 @@ void ofApp::update(){
 		for (int i = 0; i < enemies_.size(); i++) {
 			// have the enemy "move down"
 			enemies_[i].update();
+
 			// check if enemy can shoot or not
 			if (enemies_[i].time_to_shoot()) {
 				Bullet b;
 				// create the "enemy" bullet to setup
+				// TODO: change magic number
 				b.setup(&enemy_bullet_img_, false,
-					enemies_[i].speed_, enemies_[i].position_);
+					enemies_[i].speed_ + 3, enemies_[i].position_);
 				bullets_.push_back(b);
+			}
+
+			// if enemies go offscreen then erase from the vector
+			if (enemies_[i].position_.y > ofGetHeight() + 50) {
+				enemies_.erase(enemies_.begin() + i);
 			}
 		}
 
