@@ -21,10 +21,6 @@ void Player::draw() {
 	player_img_->draw(position_.x - width_ / 2, position_.y - height_ / 2);
 }
 
-void Player::shoot() {
-
-}
-
 void Player::calculate_movement() {
 	// if 'a' key is pressed, move left of screen (subtract by x)
 	if (is_a_pressed_ && (position_.x - width_ / 4) > 0) {
@@ -40,8 +36,4 @@ void Player::calculate_movement() {
 	if (is_s_pressed_ && position_.y < (ofGetHeight() - height_ / 2)) {
 		position_.y += speed_;
 	}
-}
-
-bool Player::check_can_shoot() {
-	return true;
 }

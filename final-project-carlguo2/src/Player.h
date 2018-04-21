@@ -30,7 +30,5 @@ public:
 	void setup(ofImage* _img, float x, float y, double speed);
 	void update();
 	void draw();
-	void shoot();
 	void calculate_movement();
-	bool check_can_shoot();
 };
