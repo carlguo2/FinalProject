@@ -185,4 +185,7 @@
     <None Include="src\README.md" />
     <None Include=".gitignore" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Development.txt" />
+  </ItemGroup>
 </Project>
