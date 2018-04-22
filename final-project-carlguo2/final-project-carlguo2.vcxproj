@@ -238,7 +238,7 @@
     <None Include="src\README.md" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Development.txt" />
+    <Text Include="Development.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ProjectExtensions>

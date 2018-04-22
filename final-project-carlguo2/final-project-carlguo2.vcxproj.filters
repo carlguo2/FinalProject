@@ -186,6 +186,6 @@
     <None Include=".gitignore" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Development.txt" />
+    <Text Include="Development.md" />
   </ItemGroup>
 </Project>
