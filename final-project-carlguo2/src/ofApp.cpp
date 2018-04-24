@@ -22,8 +22,47 @@ void ofApp::setup(){
 
 	// test to see if enemy can work or not.
 	Enemy e;
-	e.setup(max_enemy_amplitude_, max_enemy_shoot_interval_, &enemy_img_);
+	e.setup(max_enemy_shoot_interval_, &enemy_img_);
 	enemies_.push_back(e);
+}
+
+void ofApp::check_hit_enemy() {
+	// loop through bullets vector
+	for (int b = 0; b < bullets_.size(); b++) {
+		// check if bullet is from player
+		if (bullets_[b].from_player_) {
+			// loop through enemy array
+			for (int e = 0; e < enemies_.size(); e++) {
+				// check distance of bullet from enemy
+				if (ofDist(bullets_[b].position_.x, bullets_[b].position_.y,
+					enemies_[e].position_.x, enemies_[e].position_.y)
+					< enemies_[e].width_ / 2) {
+					// if bullet is close enough to hit the enemy, erase the bullet and enemy
+					bullets_.erase(bullets_.begin() + b);
+					enemies_.erase(enemies_.begin() + e);
+				}
+			}
+		}
+	}
+}
+
+void ofApp::check_hit_player() {
+	// loop through bullet vector
+	for (int b = 0; b < bullets_.size(); b++) {
+		// check if bullets are from the enemy
+		if (!bullets_[b].from_player_) {
+			if (ofDist(bullets_[b].position_.x, bullets_[b].position_.y,
+				player_.position_.x, player_.position_.y) < player_.width_ / 2) {
+				//erase bullet and decrement player life
+				bullets_.erase(bullets_.begin() + b);
+				player_.lives--;
+				// if player life is 0 then switch to end gamestate
+				if (player_.lives <= 0) {
+					current_state_ = END;
+				}
+			}
+		}
+	}
 }
 
 void ofApp::update_bullets_vector() {
@@ -41,6 +80,7 @@ void ofApp::update_bullets_vector() {
 	}
 
 	// check for collision
+	check_hit_enemy();
 }
 
 //--------------------------------------------------------------

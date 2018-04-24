@@ -56,4 +56,6 @@ public:
 
 	//own methods
 	void update_bullets_vector();
+	void check_hit_enemy();
+	void check_hit_player();
 };
