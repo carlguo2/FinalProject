@@ -13,7 +13,6 @@ void ofApp::setup(){
 		ofGetHeight() - player_img_.getHeight() / 2, 5);
 
 	// instantiate enemy 
-	max_enemy_amplitude_ = 3.0;
 	max_enemy_shoot_interval_ = 1.5;
 	enemy_img_.load("enemy.png");
 
@@ -39,12 +38,16 @@ void ofApp::create_player_bullet() {
 	bullets_.push_back(b);
 }
 
+// spawns a new enemy when it is necessary 
 void ofApp::create_new_enemy() {
 	Enemy e;
 	e.setup(max_enemy_shoot_interval_, &enemy_img_);
 	enemies_.push_back(e);
 }
 
+// check for player bullet collision with an enemy
+// if an enemy is deemed "hit" then erase specific enemy and bullet '
+// from their respective vectors.
 void ofApp::check_hit_enemy() {
 	// loop through bullets vector
 	for (int b = 0; b < bullets_.size(); b++) {
@@ -65,6 +68,9 @@ void ofApp::check_hit_enemy() {
 	}
 }
 
+// check for collision between enemy bullet and player.
+// if player is "hit" the bullet will be erased from vector 
+// and the program will transition to end gamestate.
 void ofApp::check_hit_player() {
 	// loop through bullet vector
 	for (int b = 0; b < bullets_.size(); b++) {
@@ -84,6 +90,9 @@ void ofApp::check_hit_player() {
 	}
 }
 
+// constantly updating the bullet vector, which keeps track of
+// all bullets in the game. Checks when bullet goes offscreen that
+// it is erased from the bullet vector.
 void ofApp::update_bullets_vector() {
 	// loop through each bullet to manage them all
 	for (int i = 0; i < bullets_.size(); i++) {
@@ -104,6 +113,10 @@ void ofApp::update_bullets_vector() {
 }
 
 //--------------------------------------------------------------
+// constantly check for changes with player or bullet
+// or if new enemy should be spawned or not. 
+// update function also tracks movement of player and enemy
+// if enemy goes offscreen then will erase enemy from enemy vector
 void ofApp::update(){
 	// check current game states
 	if (current_state_ == START) {
@@ -140,6 +153,8 @@ void ofApp::update(){
 }
 
 //--------------------------------------------------------------
+// draws each object using its respective png image stored in the bin folder
+// also draws text 
 void ofApp::draw(){
 	// check current game states
 	if (current_state_ == START) {
@@ -170,11 +185,18 @@ void ofApp::draw(){
 	}
 }
 
+// resets all values once game is restarted
 void ofApp::reset() {
-
+	// resets all objects in the game and scores in game
+	player_.setup(&player_img_, ofGetWidth() / 2,
+		ofGetHeight() - player_img_.getHeight() / 2, 5);
+	bullets_.clear();
+	enemies_.clear();
+	score_ = 0;
 }
 
 //--------------------------------------------------------------
+// tracks keys pressed
 void ofApp::keyPressed(int key){
 	if (current_state_ == START) {
 		if (key == 's') {
@@ -205,10 +227,10 @@ void ofApp::keyPressed(int key){
 	}
 	else if (current_state_ == END) {
 		if (key == 'r') {
+			// reset the state of everything
+			reset();
 			// move state to in game
 			current_state_ = IN_GAME;
-			// reset the state of everything
-			setup();
 			// set up level controller to begin the game
 			level_controller_.setup(ofGetElapsedTimeMillis());
 		}
@@ -216,6 +238,7 @@ void ofApp::keyPressed(int key){
 }
 
 //--------------------------------------------------------------
+// tracks keys released
 void ofApp::keyReleased(int key){
 	// check current game states
 	if (current_state_ == IN_GAME) {

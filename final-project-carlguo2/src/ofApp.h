@@ -33,7 +33,6 @@ private:
 	// enemy properties
 	std::vector<Enemy> enemies_;
 	ofImage enemy_img_;
-	float max_enemy_amplitude_;
 	float max_enemy_shoot_interval_;
 
 	// LevelController 
