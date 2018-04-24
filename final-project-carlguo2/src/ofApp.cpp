@@ -52,7 +52,7 @@ void ofApp::check_hit_player() {
 		// check if bullets are from the enemy
 		if (!bullets_[b].from_player_) {
 			if (ofDist(bullets_[b].position_.x, bullets_[b].position_.y,
-				player_.position_.x, player_.position_.y) < player_.width_ / 2) {
+				player_.position_.x, player_.position_.y) < (player_.height_ / 2)) {
 				//erase bullet and decrement player life
 				bullets_.erase(bullets_.begin() + b);
 				player_.lives--;
@@ -81,6 +81,7 @@ void ofApp::update_bullets_vector() {
 
 	// check for collision
 	check_hit_enemy();
+	check_hit_player();
 }
 
 //--------------------------------------------------------------
