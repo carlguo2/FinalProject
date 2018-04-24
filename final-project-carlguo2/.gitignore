@@ -262,8 +262,8 @@ __pycache__/
 
 # Exclude some files that got through
 icon.rc
-final-project-carlguo.sln
-final-project-carlguo.vcxproj
-final-project-carlguo.vcxproj.filters
+*.sln
+*.vcxproj
 *.png
+*.vs
 
