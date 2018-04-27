@@ -26,7 +26,9 @@ Thursday -
 Had a lot this week but managed to debug bullet and enemies vector. Both work as intended. Will probably tweak the game to 
 make gameplay more enjoyable 
 
-
+Friday - 
+Found a bug where game would crash if I tried to shoot but was in contact with the enemy. Had to test a lot to narrow down why game
+was crashing. I made it so the player can't shoot at a certain distance from the enemy in order to work around this bug.
 
 ### Code Review 3
 

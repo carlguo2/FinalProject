@@ -37,3 +37,14 @@ void Player::calculate_movement() {
 		position_.y += speed_;
 	}
 }
+
+void Player::reset(float x, float y) {
+	// reset player attributes
+	position_.x = x;
+	position_.y = y;
+	// reset key press booleans back to false
+	is_w_pressed_ = false;
+	is_a_pressed_ = false;
+	is_s_pressed_ = false;
+	is_d_pressed_ = false;
+}

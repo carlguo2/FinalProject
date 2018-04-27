@@ -7,6 +7,11 @@ void ofApp::setup(){
 	current_state_ = START;
 	score_ = 0;
 
+	// set up start screen and load
+	game_screen_img_.load("start_screen.png");
+	// set up game font
+	game_font_.load("Gota_Light.otf", 35);
+
 	// instantiate player image
 	player_img_.load("player.png");  //TODO: turn this into a constant
 	player_.setup(&player_img_, ofGetWidth() / 2,
@@ -65,6 +70,8 @@ void ofApp::check_hit_enemy() {
 					// if bullet is close enough to hit the enemy, erase the bullet and enemy
 					bullets_.erase(bullets_.begin() + b);
 					enemies_.erase(enemies_.begin() + e);
+					// increment score
+					score_++;
 				}
 			}
 		}
@@ -181,12 +188,14 @@ void ofApp::update(){
 // draws each object using its respective png image stored in the bin folder
 // also draws text 
 void ofApp::draw(){
+	// draw game screen
+	game_screen_img_.draw(0, 0);
 	// check current game states
 	if (current_state_ == START) {
 		// draw string for start screen
-		std::string start_message = "S to start game!\n";
-		ofDrawBitmapString(start_message,
-			ofGetWindowWidth() / 2,
+		std::string start_message = "Press 'S' to start game!\n";
+		game_font_.drawString(start_message,
+			ofGetWindowWidth() / 3,
 			ofGetWindowHeight() / 2);
 	}
 	else if (current_state_ == IN_GAME) {
@@ -205,19 +214,20 @@ void ofApp::draw(){
 			extra_lives_[i].draw();
 		}
 
-		// debug shoot to see if actually deletes when goes offscreen
-		std::string enemy_message = std::to_string(enemies_.size());
-		ofDrawBitmapString(enemy_message,
-			ofGetWindowWidth() / 2,
-			ofGetWindowHeight() / 2);
+		// draw game score on top of the screen
+		game_font_.drawString(std::to_string(score_), 30, 72);
 	}
 	else if (current_state_ == END) {
-		// draw end screen
-		std::string restart_message = std::string("Game Over! \n \n") +
-									"R to start game! \n \n" +
-									"C to close game";
-		ofDrawBitmapString(restart_message,
-			ofGetWindowWidth() / 2,
+		std::string game_over_message = std::string("Game Over! \n \n") +
+			"Your Score: " + std::to_string(score_);
+		game_font_.drawString(game_over_message,
+			ofGetWindowWidth() / 3,
+			ofGetWindowHeight() / 3);
+
+		std::string restart_message = std::string("Press R to restart \n \n") + 
+			"Press C to close";
+		game_font_.drawString(restart_message,
+			ofGetWindowWidth() / 3,
 			ofGetWindowHeight() / 2);
 	}
 }
@@ -225,8 +235,7 @@ void ofApp::draw(){
 // resets all values once game is restarted
 void ofApp::reset() {
 	// resets all objects in the game and scores in game
-	player_.setup(&player_img_, ofGetWidth() / 2,
-		ofGetHeight() - player_img_.getHeight() / 2, 5);
+	player_.reset(ofGetWidth() / 2, ofGetHeight() - player_img_.getHeight() / 2);
 	bullets_.clear();
 	enemies_.clear();
 	score_ = 0;
@@ -315,8 +324,15 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-	if (button == 0) {
-		create_player_bullet();
+	for (Enemy e : enemies_) {
+		// make sure that player can't shoot when at a certain close
+		// distance from enemy. This cuts down on a bug that makes
+		// the game crash.
+		if (button == 0 &&
+			ofDist(player_.position_.x, player_.position_.y,
+				e.position_.x, e.position_.y) > player_.width_) {
+			create_player_bullet();
+		}
 	}
 }
 

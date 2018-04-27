@@ -31,4 +31,5 @@ public:
 	void update();
 	void draw();
 	void calculate_movement();
+	void reset(float x, float y);
 };
