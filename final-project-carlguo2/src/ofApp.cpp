@@ -159,7 +159,7 @@ void ofApp::draw(){
 	// check current game states
 	if (current_state_ == START) {
 		// draw string for start screen
-		string start_message = "S to start game!\n";
+		std::string start_message = "S to start game!\n";
 		ofDrawBitmapString(start_message,
 			ofGetWindowWidth() / 2,
 			ofGetWindowHeight() / 2);
@@ -175,10 +175,18 @@ void ofApp::draw(){
 		for (int i = 0; i < enemies_.size(); i++) {
 			enemies_[i].draw();
 		}
+
+		// debug shoot to see if actually deletes when goes offscreen
+		std::string bullet_message = std::to_string(bullets_.size());
+		ofDrawBitmapString(bullet_message,
+			ofGetWindowWidth() / 2,
+			ofGetWindowHeight() / 2);
 	}
 	else if (current_state_ == END) {
 		// draw end screen
-		string restart_message = "Game Over! \nR to start game!\n";
+		std::string restart_message = std::string("Game Over! \n \n") +
+									"R to start game! \n \n" +
+									"C to close game";
 		ofDrawBitmapString(restart_message,
 			ofGetWindowWidth() / 2,
 			ofGetWindowHeight() / 2);
@@ -233,6 +241,10 @@ void ofApp::keyPressed(int key){
 			current_state_ = IN_GAME;
 			// set up level controller to begin the game
 			level_controller_.setup(ofGetElapsedTimeMillis());
+		}
+		else if (key == 'c') {
+			// exit the app
+			OF_EXIT_APP(0);
 		}
 	}
 }

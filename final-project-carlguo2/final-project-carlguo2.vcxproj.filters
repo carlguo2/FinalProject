@@ -55,7 +55,7 @@
     <ClCompile Include="src\Player.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\PlayerLife.cpp">
+    <ClCompile Include="src\ExtraLife.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -170,11 +170,11 @@
     <ClInclude Include="src\Player.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\PlayerLife.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="test\catch.hpp">
       <Filter>test</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ExtraLife.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

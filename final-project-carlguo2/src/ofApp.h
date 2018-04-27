@@ -1,5 +1,5 @@
 #pragma once
-#include <string.h>
+#include <string>
 #include <vector>
 
 #include "ofMain.h"
@@ -7,7 +7,7 @@
 #include "Enemy.h"
 #include "LevelController.h"
 #include "Player.h"
-#include "PlayerLife.h"
+#include "ExtraLife.h"
 
 // Enum to represent the current state of the game
 enum GameState {

@@ -12,6 +12,17 @@ used the Snake game as reference and will plan on creating variables to avoid ma
 plan to get game sense collision, display score, have audio, and high score list. 
 
 ### Code Review 2
+Monday - 
+Worked on getting collision to work. Had to adjust what counted as a "collision" in order to improve gameplay.
+Finished implementing LevelController as well, now the program counts when to spawn another enemy. Had to adjust
+that value as well to make gameplay more interesting. Had a bug where enemies kept spawning on the screen, managed to
+solve it after realizing that I was setting current_state to IN_GAME rather than START in the setup. Also finished 
+getting transitions between START, IN_GAME, END state to work through keyPress. Ran into small problem where game 
+wasn't resetting properly and crashed. Turns out I shouldn't use default constructor for player when I didn't implement 
+it. Used player.setup to reset player instead. Next will be adding score to the screen, debugging to make sure that the 
+enemy and bullets properly disappear when they go offscreen or when collision is made.
+
+
 
 ### Code Review 3
 
