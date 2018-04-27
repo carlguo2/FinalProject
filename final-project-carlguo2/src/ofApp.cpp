@@ -177,8 +177,8 @@ void ofApp::draw(){
 		}
 
 		// debug shoot to see if actually deletes when goes offscreen
-		std::string bullet_message = std::to_string(bullets_.size());
-		ofDrawBitmapString(bullet_message,
+		std::string enemy_message = std::to_string(enemies_.size());
+		ofDrawBitmapString(enemy_message,
 			ofGetWindowWidth() / 2,
 			ofGetWindowHeight() / 2);
 	}
