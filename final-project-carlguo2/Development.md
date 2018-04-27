@@ -22,6 +22,10 @@ wasn't resetting properly and crashed. Turns out I shouldn't use default constru
 it. Used player.setup to reset player instead. Next will be adding score to the screen, debugging to make sure that the 
 enemy and bullets properly disappear when they go offscreen or when collision is made.
 
+Thursday - 
+Had a lot this week but managed to debug bullet and enemies vector. Both work as intended. Will probably tweak the game to 
+make gameplay more enjoyable 
+
 
 
 ### Code Review 3

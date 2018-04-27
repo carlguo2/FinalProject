@@ -19,6 +19,9 @@ void ofApp::setup(){
 	// instantiate bullet images
 	player_bullet_img_.load("player_bullet.png");  // TODO: turn string to constant
 	enemy_bullet_img_.load("enemy_bullet.png");
+
+	// instantiate power up image
+	life_img.load("extra_life_image.png");
 }
 
 // method especially made to create bullet fired from enemy
@@ -112,6 +115,27 @@ void ofApp::update_bullets_vector() {
 	check_hit_player();
 }
 
+// consistently updates the amount of extra life bonuses that exist in the game. 
+void ofApp::update_power_ups() {
+	// loop through each bonus to manage them all
+	for (int i = 0; i < extra_lives_.size(); i++) {
+		// update the extra life
+		extra_lives_[i].update();
+		// check when extra life collides with player
+		if (ofDist(extra_lives_[i].position_.x, extra_lives_[i].position_.y,
+			player_.position_.x, player_.position_.y) < (player_.height_ / 5)) {
+			// increment player life
+			extra_lives_.erase(extra_lives_.begin() + i);
+			player_.lives++;
+		}
+		// check when a power up goes off screen
+		if (extra_lives_[i].position_.y - extra_lives_[i].width_ / 2 > ofGetHeight()) {
+			// when extra life about to go out screen, erase it from vector
+			extra_lives_.erase(extra_lives_.begin() + i);
+		}
+	}
+}
+
 //--------------------------------------------------------------
 // constantly check for changes with player or bullet
 // or if new enemy should be spawned or not. 
@@ -125,6 +149,7 @@ void ofApp::update(){
 		// update game objects action
 		player_.update();
 		update_bullets_vector();
+		update_power_ups();
 
 		// get level controller to update and check when to spawn next enemy
 		if (level_controller_.should_spawn_enemy()) {
@@ -174,6 +199,10 @@ void ofApp::draw(){
 		// draw each enemy in vector
 		for (int i = 0; i < enemies_.size(); i++) {
 			enemies_[i].draw();
+		}
+		// draw each power up in vector
+		for (int i = 0; i < extra_lives_.size(); i++) {
+			extra_lives_[i].draw();
 		}
 
 		// debug shoot to see if actually deletes when goes offscreen

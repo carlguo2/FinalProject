@@ -7,10 +7,11 @@ void Enemy::setup(float max_shoot_interval, ofImage* enemy_img) {
 
 	// set position
 	position_.x = ofRandom(width_ / 2, ofGetWidth() - width_ / 2);
-	position_.y = 0;
+	// get the enemy to start behind the screen
+	position_.y = -enemy_img->getWidth() / 2;
 
 	// interval between enemy shots
-	shoot_interval_ = 1;//ofRandom(0.5, max_shoot_interval);
+	shoot_interval_ = ofRandom(0.5, max_shoot_interval);
 	// ofElapsedTime gets the current time in seconds since program started
 	start_shoot_ = ofGetElapsedTimef();
 }
