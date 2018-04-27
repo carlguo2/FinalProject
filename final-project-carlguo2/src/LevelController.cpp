@@ -2,7 +2,7 @@
 
 void LevelController::setup(float strt_time) {
 	start_time_ = strt_time;
-	spawn_enemy_time_interval_ = 5000;//500; // enemy spawns every .5 seconds
+	spawn_enemy_time_interval_ = 1000;//500; // enemy spawns every .5 seconds
 }
 
 bool LevelController::should_spawn_enemy() {
