@@ -27,6 +27,9 @@ private:
 	ofTrueTypeFont game_font_;
 	ofTrueTypeFont small_game_font_;
 
+	// bool to make sure bullet fired once per mouse click
+	bool is_mouse_pressed = false;
+
 	// high score vector
 	std::vector<int> high_score_;
 	// makes sure the high_score_ array doesn't get looped when pushing back
@@ -68,6 +71,7 @@ public:
 	void keyPressed(int key);
 	void keyReleased(int key);
 	void mousePressed(int x, int y, int button);
+	void mouseReleased(int x, int y, int button);
 
 	//own methods
 	void draw_game_start();
@@ -75,8 +79,7 @@ public:
 	void draw_game_paused();
 	void draw_game_end();
 
-	void check_hit_enemy();
-	void check_hit_player();
+	void check_hit();
 
 	void create_new_enemy();
 	void create_enemy_bullet(Enemy e);

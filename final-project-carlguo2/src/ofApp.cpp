@@ -55,40 +55,17 @@ void ofApp::create_new_enemy() {
 	enemies_.push_back(e);
 }
 
-// check for player bullet collision with an enemy
-// if an enemy is deemed "hit" then erase specific enemy and bullet '
-// from their respective vectors.
-void ofApp::check_hit_enemy() {
-	// loop through bullets vector
-	for (int b = 0; b < bullets_.size(); b++) {
-		// check if bullet is from player
-		if (bullets_[b].from_player_) {
-			// loop through enemy array
-			for (int e = 0; e < enemies_.size(); e++) {
-				// check distance of bullet from enemy
-				if (ofDist(bullets_[b].position_.x, bullets_[b].position_.y,
-					enemies_[e].position_.x, enemies_[e].position_.y)
-					< enemies_[e].width_ / 2) {
-					// if bullet is close enough to hit the enemy, erase the bullet and enemy
-					bullets_.erase(bullets_.begin() + b);
-					enemies_.erase(enemies_.begin() + e);
-					// increment score
-					score_++;
-				}
-			}
-		}
-	}
-}
-
-// check for collision between enemy bullet and player.
+// check for collision between bullet and object.
 // if player is "hit" the bullet will be erased from vector 
 // and the program will transition to end gamestate.
-void ofApp::check_hit_player() {
+// if an enemy is deemed "hit" then erase specific enemy and bullet '
+// from their respective vectors.
+void ofApp::check_hit() {
 	// loop through bullet vector
 	for (int b = 0; b < bullets_.size(); b++) {
 		// check if bullets are from the enemy
-		if (!bullets_[b].from_player_) {
-			if (ofDist(bullets_[b].position_.x, bullets_[b].position_.y,
+		if (!bullets_.at(b).from_player_) {
+			if (ofDist(bullets_.at(b).position_.x, bullets_.at(b).position_.y,
 				player_.position_.x, player_.position_.y) < (player_.height_ / 5)) {
 				//erase bullet and decrement player life
 				bullets_.erase(bullets_.begin() + b);
@@ -96,6 +73,22 @@ void ofApp::check_hit_player() {
 				// if player life is 0 then switch to end gamestate
 				if (player_.lives <= 0) {
 					current_state_ = END;
+				}
+			}
+		}
+		else {
+			// loop through enemy array
+			for (int e = enemies_.size() - 1; e >= 0; e--) {
+				// check distance of bullet from enemy
+				if (b < bullets_.size() &&
+					ofDist(bullets_.at(b).position_.x, bullets_.at(b).position_.y,
+					enemies_.at(e).position_.x, enemies_.at(e).position_.y)
+					< enemies_.at(e).width_ / 2) {
+					// if bullet is close enough to hit the enemy, erase the bullet and enemy
+					bullets_.erase(bullets_.begin() + b);
+					enemies_.erase(enemies_.begin() + e);
+					// increment score
+					score_++;
 				}
 			}
 		}
@@ -109,36 +102,35 @@ void ofApp::update_bullets_vector() {
 	// loop through each bullet to manage them all
 	for (int i = 0; i < bullets_.size(); i++) {
 		// update all the bullets
-		bullets_[i].update();
+		bullets_.at(i).update();
 		// check when a bullet goes out of screen   
 		// TODO: Get rid of magic numbers
-		if (bullets_[i].position_.y - bullets_[i].b_width_ / 8 < 0 ||
-			bullets_[i].position_.y - bullets_[i].b_width_ / 8 > ofGetHeight()) {
+		if (bullets_.at(i).position_.y - bullets_.at(i).b_width_ / 8 < 0 ||
+			bullets_.at(i).position_.y - bullets_.at(i).b_width_ / 8 > ofGetHeight()) {
 			// when bullet about to go out screen, erase it from vector
 			bullets_.erase(bullets_.begin() + i);
 		}
 	}
 
 	// check for collision
-	check_hit_enemy();
-	check_hit_player();
+	check_hit();
 }
 
 // consistently updates the amount of extra life bonuses that exist in the game. 
 void ofApp::update_power_ups() {
 	// loop through each bonus to manage them all
-	for (int i = 0; i < extra_lives_.size(); i++) {
+	for (int i = extra_lives_.size() - 1; i >= 0; i--) {
 		// update the extra life
-		extra_lives_[i].update();
+		extra_lives_.at(i).update();
 		// check when extra life collides with player
-		if (ofDist(extra_lives_[i].position_.x, extra_lives_[i].position_.y,
+		if (ofDist(extra_lives_.at(i).position_.x, extra_lives_.at(i).position_.y,
 			player_.position_.x, player_.position_.y) < (player_.height_ / 5)) {
 			// increment player life
 			extra_lives_.erase(extra_lives_.begin() + i);
 			player_.lives++;
 		}
 		// check when a power up goes off screen
-		if (extra_lives_[i].position_.y - extra_lives_[i].width_ / 2 > ofGetHeight()) {
+		if (extra_lives_.at(i).position_.y - extra_lives_.at(i).width_ / 2 > ofGetHeight()) {
 			// when extra life about to go out screen, erase it from vector
 			extra_lives_.erase(extra_lives_.begin() + i);
 		}
@@ -168,15 +160,15 @@ void ofApp::update(){
 		// loop through enemy vector to update each enemy
 		for (int i = 0; i < enemies_.size(); i++) {
 			// have the enemy "move down"
-			enemies_[i].update();
+			enemies_.at(i).update();
 
 			// check if enemy can shoot or not
-			if (enemies_[i].time_to_shoot()) {
-				create_enemy_bullet(enemies_[i]);
+			if (enemies_.at(i).time_to_shoot()) {
+				create_enemy_bullet(enemies_.at(i));
 			}
 
 			// if enemies go offscreen then erase from the vector
-			if (enemies_[i].position_.y > ofGetHeight() + 50) {
+			if (enemies_.at(i).position_.y > ofGetHeight() + 50) {
 				enemies_.erase(enemies_.begin() + i);
 			}
 		}
@@ -201,16 +193,19 @@ void ofApp::draw_in_game() {
 	player_.draw();
 	// draw each bullet in vector
 	for (int i = 0; i < bullets_.size(); i++) {
-		bullets_[i].draw();
+		bullets_.at(i).draw();
 	}
 	// draw each enemy in vector
 	for (int i = 0; i < enemies_.size(); i++) {
-		enemies_[i].draw();
+		enemies_.at(i).draw();
 	}
 	// draw each power up in vector
 	for (int i = 0; i < extra_lives_.size(); i++) {
-		extra_lives_[i].draw();
+		extra_lives_.at(i).draw();
 	}
+
+	// debug
+	game_font_.drawString("bullet " + std::to_string(bullets_.size()), ofGetWindowWidth() / 3, ofGetWindowHeight() / 3);
 
 	// draw game score on top of the screen
 	game_font_.drawString(std::to_string(score_), 30, 72);
@@ -395,10 +390,16 @@ void ofApp::mousePressed(int x, int y, int button){
 		// make sure that player can't shoot when at a certain close
 		// distance from enemy. This cuts down on a bug that makes
 		// the game crash.
-		if (button == 0 &&
+		if (button == 0 && !is_mouse_pressed &&
 			ofDist(player_.position_.x, player_.position_.y,
 				e.position_.x, e.position_.y) > player_.width_) {
 			create_player_bullet();
+			is_mouse_pressed = true;
 		}
 	}
+}
+
+//--------------------------------------------------------------
+void ofApp::mouseReleased(int x, int y, int button) {
+	is_mouse_pressed = false;
 }
