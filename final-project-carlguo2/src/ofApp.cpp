@@ -224,7 +224,7 @@ void ofApp::draw_game_end() {
 		"Final Score: " + std::to_string(score_);
 	game_font_.drawString(game_over_message,
 		ofGetWindowWidth() / 3,
-		ofGetWindowHeight() / 6);
+		ofGetWindowHeight() / 5);
 
 	std::string restart_message = std::string("Press R to restart \n") +
 		"Press C to close";
