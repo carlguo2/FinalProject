@@ -7,3 +7,4 @@ I pulled them off of Google Images but these were the links I found them at
 [Bullets](http://forum.entitygaming.com/showthread.php?1380-Custom-Crosshairs!)  
 [Extra Life](http://pixelartmaker.com/art/10ac676dbd81762)  
 [Start Screen](https://itch.io/jam/flying-toast-with-jam/rate/13518)  
+[Laser Audio from dklon](https://opengameart.org/content/laser-fire)

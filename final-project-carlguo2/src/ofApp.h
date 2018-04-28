@@ -27,6 +27,9 @@ private:
 	ofTrueTypeFont game_font_;
 	ofTrueTypeFont small_game_font_;
 
+	// game audio
+	ofSoundPlayer player_bullet_sound;
+
 	// bool to make sure bullet fired once per mouse click
 	bool is_mouse_pressed = false;
 

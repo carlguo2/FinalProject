@@ -29,6 +29,10 @@ void ofApp::setup(){
 
 	// instantiate power up image
 	life_img.load("extra_life_image.png");
+
+	// set up game audio
+	player_bullet_sound.loadSound("player_bullet.wav");
+	player_bullet_sound.setVolume(5);
 }
 
 // method especially made to create bullet fired from enemy
@@ -204,9 +208,6 @@ void ofApp::draw_in_game() {
 		extra_lives_.at(i).draw();
 	}
 
-	// debug
-	game_font_.drawString("bullet " + std::to_string(bullets_.size()), ofGetWindowWidth() / 3, ofGetWindowHeight() / 3);
-
 	// draw game score on top of the screen
 	game_font_.drawString(std::to_string(score_), 30, 72);
 }
@@ -225,7 +226,7 @@ void ofApp::draw_game_end() {
 		ofGetWindowWidth() / 3,
 		ofGetWindowHeight() / 6);
 
-	std::string restart_message = std::string("Press R to restart \n \n") +
+	std::string restart_message = std::string("Press R to restart \n") +
 		"Press C to close";
 	small_game_font_.drawString(restart_message,
 		ofGetWindowWidth() / 25,
@@ -394,6 +395,7 @@ void ofApp::mousePressed(int x, int y, int button){
 			ofDist(player_.position_.x, player_.position_.y,
 				e.position_.x, e.position_.y) > player_.width_) {
 			create_player_bullet();
+			player_bullet_sound.play();
 			is_mouse_pressed = true;
 		}
 	}

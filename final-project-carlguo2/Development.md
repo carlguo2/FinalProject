@@ -35,6 +35,11 @@ end of the game. However had a problem where the score would not display. it tur
 I also fixed a problem where the code would throw an exception when I hit a target. It turned out that my code would keep looping at an index
 to find a bullet in my bullet vector after I erased it. I found this out by doing a print debug on my game screen using the drawString function
 I added a condition where index < bullets_.size() before I check for collision and this fixed the issue.
+
+###### Saturday - 
+Added a shoot sound to my game. Will also add a game over and game start sound effects and maybe background music if I feel like it.
+Will try to find better way to credit the assets I got since I just pulled them out of google images. Will start working on ofxOSC portion
+of the code.
 ***
 ### Code Review 3
 
