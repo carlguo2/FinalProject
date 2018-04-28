@@ -12,7 +12,7 @@ used the Snake game as reference and will plan on creating variables to avoid ma
 plan to get game sense collision, display score, have audio, and high score list. 
 ***
 ### Code Review 2
-Monday - 
+###### Monday -  
 Worked on getting collision to work. Had to adjust what counted as a "collision" in order to improve gameplay.
 Finished implementing LevelController as well, now the program counts when to spawn another enemy. Had to adjust
 that value as well to make gameplay more interesting. Had a bug where enemies kept spawning on the screen, managed to
@@ -22,11 +22,11 @@ wasn't resetting properly and crashed. Turns out I shouldn't use default constru
 it. Used player.setup to reset player instead. Next will be adding score to the screen, debugging to make sure that the 
 enemy and bullets properly disappear when they go offscreen or when collision is made.
 
-Thursday - 
+###### Thursday -   
 Had a lot this week but managed to debug bullet and enemies vector. Both work as intended. Will probably tweak the game to 
 make gameplay more enjoyable 
 
-Friday - 
+###### Friday -  
 Found a bug where game would crash if I tried to shoot but was in contact with the enemy. Had to test a lot to narrow down why game
 was crashing. I made it so the player can't shoot at a certain distance from the enemy in order to work around this bug. Added a start screen
 and game font into the game, based this from the ofbook example. Also created the extra life power up that will be linked to ofxOSC library. 
