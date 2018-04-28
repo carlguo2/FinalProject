@@ -21,11 +21,11 @@ getting transitions between START, IN_GAME, END state to work through keyPress. 
 wasn't resetting properly and crashed. Turns out I shouldn't use default constructor for player when I didn't implement 
 it. Used player.setup to reset player instead. Next will be adding score to the screen, debugging to make sure that the 
 enemy and bullets properly disappear when they go offscreen or when collision is made.
----
+
 Thursday - 
 Had a lot this week but managed to debug bullet and enemies vector. Both work as intended. Will probably tweak the game to 
 make gameplay more enjoyable 
----
+
 Friday - 
 Found a bug where game would crash if I tried to shoot but was in contact with the enemy. Had to test a lot to narrow down why game
 was crashing. I made it so the player can't shoot at a certain distance from the enemy in order to work around this bug. Added a start screen
