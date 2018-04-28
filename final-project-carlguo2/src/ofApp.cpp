@@ -11,6 +11,8 @@ void ofApp::setup(){
 	game_screen_img_.load("start_screen.png");
 	// set up game font
 	game_font_.load("Gota_Light.otf", 35);
+	// smaller font
+	small_game_font_.load("Gota_Light.otf", 28);
 
 	// instantiate player image
 	player_img_.load("player.png");  //TODO: turn this into a constant
@@ -184,6 +186,65 @@ void ofApp::update(){
 	}
 }
 
+// draw the screen for start game state
+void ofApp::draw_game_start() {
+	// draw string for start screen
+	std::string start_message = "Press 'S' to start game!\n";
+	game_font_.drawString(start_message,
+		ofGetWindowWidth() / 3,
+		ofGetWindowHeight() / 2);
+}
+
+// draw the screen for in_game game state
+void ofApp::draw_in_game() {
+	// draw game objects
+	player_.draw();
+	// draw each bullet in vector
+	for (int i = 0; i < bullets_.size(); i++) {
+		bullets_[i].draw();
+	}
+	// draw each enemy in vector
+	for (int i = 0; i < enemies_.size(); i++) {
+		enemies_[i].draw();
+	}
+	// draw each power up in vector
+	for (int i = 0; i < extra_lives_.size(); i++) {
+		extra_lives_[i].draw();
+	}
+
+	// draw game score on top of the screen
+	game_font_.drawString(std::to_string(score_), 30, 72);
+}
+
+// draw the screen for paused game state
+void ofApp::draw_game_paused() {
+	string pause_message = "P to Unpause!\n";
+	game_font_.drawString(pause_message, ofGetWindowWidth() / 2.5, ofGetWindowHeight() / 2);
+}
+
+// draw the screen for end game state
+void ofApp::draw_game_end() {
+	std::string game_over_message = std::string("Game Over! \n") +
+		"Final Score: " + std::to_string(score_);
+	game_font_.drawString(game_over_message,
+		ofGetWindowWidth() / 3,
+		ofGetWindowHeight() / 6);
+
+	std::string restart_message = std::string("Press R to restart \n \n") +
+		"Press C to close";
+	small_game_font_.drawString(restart_message,
+		ofGetWindowWidth() / 25,
+		ofGetWindowHeight() / 15);
+
+	// add score to high_score_ array
+	addScoreToHighScore(score_);
+	// draw high score
+	string high_scores = getHighScoreStr();
+	game_font_.drawString(high_scores,
+		ofGetWindowWidth() / 3,
+		ofGetWindowHeight() / 2.5);
+}
+
 //--------------------------------------------------------------
 // draws each object using its respective png image stored in the bin folder
 // also draws text 
@@ -192,44 +253,59 @@ void ofApp::draw(){
 	game_screen_img_.draw(0, 0);
 	// check current game states
 	if (current_state_ == START) {
-		// draw string for start screen
-		std::string start_message = "Press 'S' to start game!\n";
-		game_font_.drawString(start_message,
-			ofGetWindowWidth() / 3,
-			ofGetWindowHeight() / 2);
+		draw_game_start();
 	}
 	else if (current_state_ == IN_GAME) {
-		// draw game objects
-		player_.draw();
-		// draw each bullet in vector
-		for (int i = 0; i < bullets_.size(); i++) {
-			bullets_[i].draw();
-		}
-		// draw each enemy in vector
-		for (int i = 0; i < enemies_.size(); i++) {
-			enemies_[i].draw();
-		}
-		// draw each power up in vector
-		for (int i = 0; i < extra_lives_.size(); i++) {
-			extra_lives_[i].draw();
-		}
-
-		// draw game score on top of the screen
-		game_font_.drawString(std::to_string(score_), 30, 72);
+		draw_in_game();
+	}
+	else if (current_state_ == PAUSED) {
+		draw_game_paused();
 	}
 	else if (current_state_ == END) {
-		std::string game_over_message = std::string("Game Over! \n \n") +
-			"Your Score: " + std::to_string(score_);
-		game_font_.drawString(game_over_message,
-			ofGetWindowWidth() / 3,
-			ofGetWindowHeight() / 3);
-
-		std::string restart_message = std::string("Press R to restart \n \n") + 
-			"Press C to close";
-		game_font_.drawString(restart_message,
-			ofGetWindowWidth() / 3,
-			ofGetWindowHeight() / 2);
+		draw_game_end();
 	}
+}
+
+// private method to add a score to high score vector
+void ofApp::addScoreToHighScore(int new_score) {
+	if (high_score_.size() < 5 && score_flag_) {
+		high_score_.push_back(new_score);
+		score_flag_ = false;
+
+		// sort the vector in descending order
+		std::sort(high_score_.begin(), high_score_.end());
+	} // check if score is large enough when theres already 10 high scores
+	else if (high_score_.size() == 5 && score_flag_) {
+		int index = -1;
+		// get index where score is larger than high score
+		for (int i = 0; i < high_score_.size(); i++) {
+			if (high_score_.at(i) > new_score) {
+				break;
+			}
+			index = i;
+		}
+
+		// move each score down from that index
+		for (int i = 1; i <= index; i++) {
+			high_score_.at(i - 1) = high_score_.at(i);
+		}
+		// change score at index to new high score
+		if (index >= 0) {
+			high_score_.at(index) = new_score;
+		}
+		score_flag_ = false;
+	}
+}
+
+std::string ofApp::getHighScoreStr() {
+	string high_scores = "Your high scores are: \n";
+	for (int i = high_score_.size() - 1; i >= 0; i--) {
+		// print out scores
+		string score = std::to_string((long)high_score_.at(i)) + "\n";
+		high_scores += score;
+	}
+
+	return high_scores;
 }
 
 // resets all values once game is restarted
@@ -244,6 +320,13 @@ void ofApp::reset() {
 //--------------------------------------------------------------
 // tracks keys pressed
 void ofApp::keyPressed(int key){
+	// set key 'p' for pause or unpause, this works only 
+	// in the in game gamestate and paused gamestate
+	if (key == 'p' && current_state_ != END && current_state_ != START) {
+		// Pause or unpause
+		current_state_ = (current_state_ == IN_GAME) ? PAUSED : IN_GAME;
+	}
+
 	if (current_state_ == START) {
 		if (key == 's') {
 			// move state to in game
@@ -258,15 +341,12 @@ void ofApp::keyPressed(int key){
 		if (key == 'w') {
 			player_.is_w_pressed_ = true;
 		}
-
 		if (key == 'a') {
 			player_.is_a_pressed_ = true;
 		}
-		
 		if (key == 's') {
 			player_.is_s_pressed_ = true;
 		}
-		
 		if (key == 'd') {
 			player_.is_d_pressed_ = true;
 		}
@@ -297,29 +377,16 @@ void ofApp::keyReleased(int key){
 		if (key == 'w') {
 			player_.is_w_pressed_ = false;
 		}
-		
 		if (key == 'a') {
 			player_.is_a_pressed_ = false;
 		}
-		
 		if (key == 's') {
 			player_.is_s_pressed_ = false;
 		}
-		
 		if (key == 'd') {
 			player_.is_d_pressed_ = false;
 		}
 	}
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-
 }
 
 //--------------------------------------------------------------
@@ -334,34 +401,4 @@ void ofApp::mousePressed(int x, int y, int button){
 			create_player_bullet();
 		}
 	}
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseEntered(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseExited(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
-
 }

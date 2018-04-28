@@ -181,9 +181,9 @@
     <ResourceCompile Include="icon.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\PROPOSAL.md" />
-    <None Include="src\README.md" />
     <None Include=".gitignore" />
+    <None Include="PROPOSAL.md" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Development.md" />
