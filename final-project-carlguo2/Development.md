@@ -30,7 +30,8 @@ Friday -
 Found a bug where game would crash if I tried to shoot but was in contact with the enemy. Had to test a lot to narrow down why game
 was crashing. I made it so the player can't shoot at a certain distance from the enemy in order to work around this bug. Added a start screen
 and game font into the game, based this from the ofbook example. Also created the extra life power up that will be linked to ofxOSC library. 
-Created a pause gamestate and divided program up into more methods.
+Created a pause gamestate and divided program up into more methods. Also created a high score vector to hold and display high scores at the
+end of the game. However had a problem where the score would not display. it turned out that I was not resetting my high score boolean flag.
 
 ### Code Review 3
 

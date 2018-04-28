@@ -271,7 +271,6 @@ void ofApp::addScoreToHighScore(int new_score) {
 	if (high_score_.size() < 5 && score_flag_) {
 		high_score_.push_back(new_score);
 		score_flag_ = false;
-
 		// sort the vector in descending order
 		std::sort(high_score_.begin(), high_score_.end());
 	} // check if score is large enough when theres already 10 high scores
@@ -315,6 +314,7 @@ void ofApp::reset() {
 	bullets_.clear();
 	enemies_.clear();
 	score_ = 0;
+	score_flag_ = true;
 }
 
 //--------------------------------------------------------------

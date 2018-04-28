@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <iostream>
 
 #include "ofMain.h"
 #include "Bullet.h"  // added game components in
