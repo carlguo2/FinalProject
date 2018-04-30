@@ -58,6 +58,9 @@
     <ClCompile Include="src\ExtraLife.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="oscCommunicator.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -174,6 +177,9 @@
       <Filter>test</Filter>
     </ClInclude>
     <ClInclude Include="src\ExtraLife.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="oscCommunicator.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
