@@ -176,18 +176,13 @@ void ofApp::update(){
 			if (enemies_.at(i).position_.y > ofGetHeight() + 50) {
 				enemies_.erase(enemies_.begin() + i);
 			}
-
-			// update the osc tester
-			osc_tester_.update();
-			if (osc_tester_.move_left_) {
-				player_.is_a_pressed_ = true;
-			}
-			else {
-				// update boolean back to false
-				player_.is_a_pressed_ = false;
-			}
 		}
 
+		// update the osc tester when testing boolean is true
+		if (is_testing_) {
+			osc_tester_.update();
+			player_.is_a_pressed_ = osc_tester_.move_left_;
+		}
 	} else if (current_state_ == END) {
 
 	}
