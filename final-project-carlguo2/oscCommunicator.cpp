@@ -11,10 +11,24 @@ oscCommunicator::oscCommunicator() {
 	message_.setAddress(message_address_root_);
 }
 
-oscCommunicator::setup() {
+void oscCommunicator::update() {
+	// check if osc communicator is sending messages
+	while (receiver_.hasWaitingMessages()) {
+		// create a message to send back to host
+		ofxOscMessage send_back_to_host;
+		// get the message
+		receiver_.getNextMessage(&message_);
 
-}
-
-oscCommunicator::update() {
-
+		// check if message is to move left
+		if (message_.getAddress() == "game/move_left") {
+			// update the get left boolean
+			move_left_ = message_.getArgAsInt(0);
+			// check if message is properly received
+			std::cout << move_left_ << endl;
+			// send back message
+			send_back_to_host.addIntArg(move_left_);
+			send_back_to_host.setAddress("/updatedVals/move_left");
+			sender_.sendMessage(send_back_to_host);
+		}
+	}
 }

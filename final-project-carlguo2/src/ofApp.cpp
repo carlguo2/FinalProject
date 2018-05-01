@@ -33,6 +33,9 @@ void ofApp::setup(){
 	// set up game audio
 	player_bullet_sound.loadSound("player_bullet.wav");
 	player_bullet_sound.setVolume(5);
+
+	// set up osc tester
+	osc_tester_ = oscCommunicator();
 }
 
 // method especially made to create bullet fired from enemy
@@ -172,6 +175,16 @@ void ofApp::update(){
 			// if enemies go offscreen then erase from the vector
 			if (enemies_.at(i).position_.y > ofGetHeight() + 50) {
 				enemies_.erase(enemies_.begin() + i);
+			}
+
+			// update the osc tester
+			osc_tester_.update();
+			if (osc_tester_.move_left_) {
+				player_.is_a_pressed_ = true;
+			}
+			else {
+				// update boolean back to false
+				player_.is_a_pressed_ = false;
 			}
 		}
 
