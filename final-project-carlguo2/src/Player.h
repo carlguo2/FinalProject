@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "Bullet.h"
 
 class Player { //TODO: separate public from private
 public:
@@ -31,5 +32,6 @@ public:
 	void update();
 	void draw();
 	void calculate_movement();
+	bool did_hit_player(Bullet b, Player p); 
 	void reset(float x, float y);
 };

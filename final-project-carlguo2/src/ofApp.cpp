@@ -69,9 +69,7 @@ void ofApp::check_hit() {
 	for (int b = 0; b < bullets_.size(); b++) {
 		// check if bullets are from the enemy
 		if (!bullets_.at(b).from_player_) {
-			// can't calculate collision by hitmap without using another library or addon.
-			if (ofDist(bullets_.at(b).position_.x, bullets_.at(b).position_.y,
-				player_.position_.x, player_.position_.y) < (player_.width_ / 7.5)) {
+			if (player_.did_hit_player(bullets_.at(b), player_)) {
 				//erase bullet and decrement player life
 				bullets_.erase(bullets_.begin() + b);
 				player_.lives--;
@@ -86,9 +84,8 @@ void ofApp::check_hit() {
 			for (int e = enemies_.size() - 1; e >= 0; e--) {
 				// check distance of bullet from enemy
 				if (b < bullets_.size() &&
-					ofDist(bullets_.at(b).position_.x, bullets_.at(b).position_.y,
-					enemies_.at(e).position_.x, enemies_.at(e).position_.y)
-					< enemies_.at(e).width_ / 2) {
+					enemies_.at(e).did_hit_enemy(
+						bullets_.at(b), enemies_.at(e))) {
 					// if bullet is close enough to hit the enemy, erase the bullet and enemy
 					bullets_.erase(bullets_.begin() + b);
 					enemies_.erase(enemies_.begin() + e);

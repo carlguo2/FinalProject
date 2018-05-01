@@ -1,6 +1,8 @@
 #pragma once
 
 #include "ofMain.h"
+#include "Bullet.h"
+
 class Enemy {
 public:
 	ofPoint position_;
@@ -15,4 +17,5 @@ public:
 	void update();
 	void draw();
 	bool time_to_shoot();
+	bool did_hit_enemy(Bullet b, Enemy e);
 };

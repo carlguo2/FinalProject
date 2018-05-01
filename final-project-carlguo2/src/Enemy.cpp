@@ -34,3 +34,12 @@ bool Enemy::time_to_shoot() {
 	}
 	return false;
 }
+
+bool Enemy::did_hit_enemy(Bullet b, Enemy e) {
+	if (ofDist(b.position_.x, b.position_.y, e.position_.x, e.position_.y)
+		< e.width_ / 2) {
+		return true;
+	}
+
+	return false;
+}

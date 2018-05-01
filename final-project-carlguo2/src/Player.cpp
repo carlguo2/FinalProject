@@ -38,6 +38,15 @@ void Player::calculate_movement() {
 	}
 }
 
+bool Player::did_hit_player(Bullet b, Player p) {
+	// can't calculate collision by hitmap without using another library or addon.
+	if (ofDist(b.position_.x, b.position_.y,
+		p.position_.x, p.position_.y) < (p.width_ / 7.5)) {
+		return true;
+	}
+	return false;
+}
+
 void Player::reset(float x, float y) {
 	// reset player attributes
 	position_.x = x;

@@ -17,4 +17,8 @@ public:
 	void setup(ofImage* img, bool is_players, double speed, ofPoint pos);
 	void update();
 	void draw();
+
+	// methods for testing
+	void set_x(float x_pos);
+	void set_y(float y_pos);
 };
