@@ -11,8 +11,11 @@ public:
 	ofxOscMessage message_;
 
 	// values we want to change
-	bool create_power_up_;
-	int enemy_shoot_interval_;
+	bool move_up_ = false;
+	bool move_down_ = false;
+	bool move_left_ = false;
+	bool move_right_ = false;
+	bool shoot_ = false;
 
 	oscCommunicator();
 	void setup();
