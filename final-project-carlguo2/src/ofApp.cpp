@@ -181,7 +181,10 @@ void ofApp::update(){
 		// update the osc tester when testing boolean is true
 		if (is_testing_) {
 			osc_tester_.update();
+			player_.is_w_pressed_ = osc_tester_.move_up_;
 			player_.is_a_pressed_ = osc_tester_.move_left_;
+			player_.is_s_pressed_ = osc_tester_.move_down_;
+			player_.is_d_pressed_ = osc_tester_.move_right_;
 		}
 	} else if (current_state_ == END) {
 

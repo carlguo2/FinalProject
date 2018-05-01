@@ -23,14 +23,34 @@ void oscCommunicator::update() {
 		receiver_.getNextMessage(&m);
 
 		// check if message is to move left
-		if (m.getAddress() == "/game/move_left") {
+		if (m.getAddress() == "/game/move_left") {  //todo: split this stuff into methods so stick to DRY principle
 			// update the get left boolean
-			move_left_ = m.getArgAsInt32(0);
+			move_left_ = m.getArgAsInt(0);
 			// check if message is properly received
 			std::cout << "moved left" << endl;
 			// send back message
 			send_back_to_host.addIntArg(move_left_);
 			send_back_to_host.setAddress("/updatedVals/move_left");
+			sender_.sendMessage(send_back_to_host);
+		}
+		else if (m.getAddress() == "/game/move_right") {
+			// update the go up boolean
+			move_right_ = m.getArgAsInt(0);
+			send_back_to_host.addIntArg(move_right_);
+			send_back_to_host.setAddress("/updatedVals/move_right");
+			sender_.sendMessage(send_back_to_host);
+		}
+		else if (m.getAddress() == "/game/move_up") {
+			// update the go up boolean
+			move_up_ = m.getArgAsInt(0);
+			send_back_to_host.addIntArg(move_up_);
+			send_back_to_host.setAddress("/updatedVals/move_up");
+			sender_.sendMessage(send_back_to_host);
+		}
+		else if (m.getAddress() == "/game/move_down") {
+			move_down_ = m.getArgAsInt(0);
+			send_back_to_host.addIntArg(move_down_);
+			send_back_to_host.setAddress("/updatedVals/move_down");
 			sender_.sendMessage(send_back_to_host);
 		}
 	}
