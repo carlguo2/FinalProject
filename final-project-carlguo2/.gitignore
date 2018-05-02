@@ -266,4 +266,4 @@ icon.rc
 *.vcxproj
 *.png
 *.vs
-
+*.touchosc

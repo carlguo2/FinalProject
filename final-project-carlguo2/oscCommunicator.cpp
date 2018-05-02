@@ -33,24 +33,30 @@ void oscCommunicator::update() {
 			send_back_to_host.setAddress("/updatedVals/move_left");
 			sender_.sendMessage(send_back_to_host);
 		}
-		else if (m.getAddress() == "/game/move_right") {
+		if (m.getAddress() == "/game/move_right") {
 			// update the go up boolean
 			move_right_ = m.getArgAsInt(0);
 			send_back_to_host.addIntArg(move_right_);
 			send_back_to_host.setAddress("/updatedVals/move_right");
 			sender_.sendMessage(send_back_to_host);
 		}
-		else if (m.getAddress() == "/game/move_up") {
+		if (m.getAddress() == "/game/move_up") {
 			// update the go up boolean
 			move_up_ = m.getArgAsInt(0);
 			send_back_to_host.addIntArg(move_up_);
 			send_back_to_host.setAddress("/updatedVals/move_up");
 			sender_.sendMessage(send_back_to_host);
 		}
-		else if (m.getAddress() == "/game/move_down") {
+		if (m.getAddress() == "/game/move_down") {
 			move_down_ = m.getArgAsInt(0);
 			send_back_to_host.addIntArg(move_down_);
 			send_back_to_host.setAddress("/updatedVals/move_down");
+			sender_.sendMessage(send_back_to_host);
+		}
+		if (m.getAddress() == "/game/shoot") {
+			shoot_ = m.getArgAsInt(0);
+			send_back_to_host.addIntArg(shoot_);
+			send_back_to_host.setAddress("/updatedVals/shoot");
 			sender_.sendMessage(send_back_to_host);
 		}
 	}

@@ -53,6 +53,7 @@ void ofApp::create_player_bullet() {
 	Bullet b;
 	b.setup(&player_bullet_img_, true, player_.speed_, player_.position_);
 	bullets_.push_back(b);
+	player_bullet_sound.play();
 }
 
 // spawns a new enemy when it is necessary 
@@ -185,6 +186,11 @@ void ofApp::update(){
 			player_.is_a_pressed_ = osc_tester_.move_left_;
 			player_.is_s_pressed_ = osc_tester_.move_down_;
 			player_.is_d_pressed_ = osc_tester_.move_right_;
+			
+			// check if shoot
+			if (osc_tester_.shoot_) {
+				create_player_bullet();
+			}
 		}
 	} else if (current_state_ == END) {
 
@@ -400,11 +406,8 @@ void ofApp::mousePressed(int x, int y, int button){
 		// make sure that player can't shoot when at a certain close
 		// distance from enemy. This cuts down on a bug that makes
 		// the game crash.
-		if (button == 0 && !is_mouse_pressed &&
-			ofDist(player_.position_.x, player_.position_.y,
-				e.position_.x, e.position_.y) > player_.width_) {
+		if (button == 0 && !is_mouse_pressed) {
 			create_player_bullet();
-			player_bullet_sound.play();
 			is_mouse_pressed = true;
 		}
 	}
