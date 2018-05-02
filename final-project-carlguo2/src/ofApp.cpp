@@ -199,11 +199,8 @@ void ofApp::update(){
 		if (is_testing_) {
 			osc_tester_.update();
 			if (osc_tester_.start_game_) {
-				// reset the state of everything
 				reset();
-				// move state to in game
 				current_state_ = IN_GAME;
-				// set up level controller to begin the game
 				level_controller_.setup(ofGetElapsedTimeMillis());
 			}
 		}
