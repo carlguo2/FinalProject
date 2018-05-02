@@ -125,6 +125,19 @@ void ofApp::update_bullets_vector() {
 // update function also tracks movement of player and enemy
 // if enemy goes offscreen then will erase enemy from enemy vector
 void ofApp::update(){
+	// check for pause function if testing
+	if (is_testing_) {
+		osc_tester_.update();
+		is_button_pause_ = osc_tester_.pause_game_;
+		std::cout << osc_tester_.pause_game_ << endl;
+		if (osc_tester_.pause_game_ && is_button_pause_ &&
+			current_state_ != END && current_state_ != START) {
+			is_button_pause_ = false;
+			// Pause or unpause
+			current_state_ = (current_state_ == IN_GAME) ? PAUSED : IN_GAME;
+		}
+	}
+
 	// check current game states
 	if (current_state_ == START) {
 		// if in start state then check if button is pressed to start game
@@ -138,15 +151,6 @@ void ofApp::update(){
 			}
 		}
 
-	}
-	else if (current_state_ == PAUSED) {
-		if (is_testing_) {
-			// use boolean flag so button unpauses smoothly at one press only
-			if (osc_tester_.pause_game_ && !is_unpaused_button_pressed) {
-				current_state_ = IN_GAME;
-			}
-			is_unpaused_button_pressed = osc_tester_.pause_game_;
-		}
 	}
 	else if (current_state_ == IN_GAME) {
 		// update game objects action
@@ -189,16 +193,20 @@ void ofApp::update(){
 				create_player_bullet();
 			}
 			is_shoot_button_pressed_ = osc_tester_.shoot_;
-
-			// check boolean flag so it easily switches to paused state 
-			// once the pause button is pressed
-			if (osc_tester_.pause_game_ && !is_pause_button_pressed) {
-				current_state_ = PAUSED;
-			}
-			is_pause_button_pressed = osc_tester_.pause_game_;
 		}
 	} else if (current_state_ == END) {
-
+		// if in start state then check if button is pressed to start game
+		if (is_testing_) {
+			osc_tester_.update();
+			if (osc_tester_.start_game_) {
+				// reset the state of everything
+				reset();
+				// move state to in game
+				current_state_ = IN_GAME;
+				// set up level controller to begin the game
+				level_controller_.setup(ofGetElapsedTimeMillis());
+			}
+		}
 	}
 }
 

@@ -14,7 +14,6 @@ oscCommunicator::oscCommunicator() {
 void oscCommunicator::update() {
 	// check if osc communicator is sending messages
 	while (receiver_.hasWaitingMessages()) {
-		std::cout << "message" << endl;
 		// take messages
 		ofxOscMessage m;
 		// get the message
@@ -22,7 +21,7 @@ void oscCommunicator::update() {
 
 		// check if message is to move left
 		if (m.getAddress() == "/game/move_left") {  //todo: split this stuff into methods so stick to DRY principle
-													// update the get left boolean
+			// update the get left boolean
 			move_left_ = m.getArgAsInt(0);
 		}
 		if (m.getAddress() == "/game/move_right") {
@@ -33,6 +32,22 @@ void oscCommunicator::update() {
 		}
 		if (m.getAddress() == "/game/move_down") {
 			move_down_ = m.getArgAsInt(0);
+		}
+		if (m.getAddress() == "/game/diag/left_down") {
+			move_left_ = m.getArgAsInt(0);
+			move_down_ = m.getArgAsInt(0);
+		}
+		if (m.getAddress() == "/game/diag/right_down") {
+			move_right_ = m.getArgAsInt(0);
+			move_down_ = m.getArgAsInt(0);
+		}
+		if (m.getAddress() == "/game/diag/left_up") {
+			move_left_ = m.getArgAsInt(0);
+			move_up_ = m.getArgAsInt(0);
+		}
+		if (m.getAddress() == "/game/diag/right_up") {
+			move_right_ = m.getArgAsInt(0);
+			move_up_ = m.getArgAsInt(0);
 		}
 		if (m.getAddress() == "/game/shoot") {
 			shoot_ = m.getArgAsInt(0);
