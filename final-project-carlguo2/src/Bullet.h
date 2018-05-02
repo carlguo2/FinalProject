@@ -19,6 +19,6 @@ public:
 	void draw();
 
 	// methods for testing
-	void set_x(float x_pos);
-	void set_y(float y_pos);
+	void set_x(const float x_pos);
+	void set_y(const float y_pos);
 };

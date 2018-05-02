@@ -24,10 +24,10 @@ void Bullet::draw() {
 }
 
 // new methods used for collision test
-void Bullet::set_x(float new_x) {
+void Bullet::set_x(const float new_x) {
 	position_.x = new_x;
 }
 
-void Bullet::set_y(float new_y) {
+void Bullet::set_y(const float new_y) {
 	position_.y = new_y;
 }

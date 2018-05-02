@@ -6,6 +6,6 @@ public:
 	float start_time_;
 	float spawn_enemy_time_interval_;
 
-	void setup(float strt_time);
+	void setup(const float strt_time);
 	bool should_spawn_enemy();
 };

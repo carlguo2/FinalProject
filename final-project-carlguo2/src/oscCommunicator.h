@@ -26,8 +26,10 @@ public:
 	bool move_left_ = false;
 	bool move_right_ = false;
 	bool shoot_ = false;
+	bool start_game_ = false;
+	bool pause_game_ = false;
 
 	oscCommunicator();
-	void setup();
+	
 	void update();
 };

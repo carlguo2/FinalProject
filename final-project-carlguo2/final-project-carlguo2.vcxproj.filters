@@ -55,14 +55,11 @@
     <ClCompile Include="src\Player.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\ExtraLife.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="oscCommunicator.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="collision_test.cpp">
       <Filter>test</Filter>
+    </ClCompile>
+    <ClCompile Include="src\oscCommunicator.cpp">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -179,10 +176,7 @@
     <ClInclude Include="test\catch.hpp">
       <Filter>test</Filter>
     </ClInclude>
-    <ClInclude Include="src\ExtraLife.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="oscCommunicator.h">
+    <ClInclude Include="src\oscCommunicator.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

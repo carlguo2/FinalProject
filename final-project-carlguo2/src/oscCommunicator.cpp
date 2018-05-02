@@ -11,10 +11,38 @@ oscCommunicator::oscCommunicator() {
 	message_.setAddress(message_address_root_);
 }
 
-oscCommunicator::setup() {
+void oscCommunicator::update() {
+	// check if osc communicator is sending messages
+	while (receiver_.hasWaitingMessages()) {
+		std::cout << "message" << endl;
+		// take messages
+		ofxOscMessage m;
+		// get the message
+		receiver_.getNextMessage(&m);
 
+		// check if message is to move left
+		if (m.getAddress() == "/game/move_left") {  //todo: split this stuff into methods so stick to DRY principle
+													// update the get left boolean
+			move_left_ = m.getArgAsInt(0);
+		}
+		if (m.getAddress() == "/game/move_right") {
+			move_right_ = m.getArgAsInt(0);
+		}
+		if (m.getAddress() == "/game/move_up") {
+			move_up_ = m.getArgAsInt(0);
+		}
+		if (m.getAddress() == "/game/move_down") {
+			move_down_ = m.getArgAsInt(0);
+		}
+		if (m.getAddress() == "/game/shoot") {
+			shoot_ = m.getArgAsInt(0);
+		}
+		if (m.getAddress() == "/game/start") {
+			start_game_ = m.getArgAsInt(0);
+		}
+		if (m.getAddress() == "/game/pause") {
+			pause_game_ = m.getArgAsInt(0);
+		}
+	}
 }
 
-oscCommunicator::update() {
-
-}

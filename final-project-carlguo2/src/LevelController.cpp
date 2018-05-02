@@ -1,6 +1,6 @@
 #include "LevelController.h"
 
-void LevelController::setup(float strt_time) {
+void LevelController::setup(const float strt_time) {
 	start_time_ = strt_time;
 	spawn_enemy_time_interval_ = 500; // enemy spawns every .5 seconds
 }

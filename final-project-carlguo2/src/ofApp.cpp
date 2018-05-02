@@ -27,9 +27,6 @@ void ofApp::setup(){
 	player_bullet_img_.load("player_bullet.png");  // TODO: turn string to constant
 	enemy_bullet_img_.load("enemy_bullet.png");
 
-	// instantiate power up image
-	life_img.load("extra_life_image.png");
-
 	// set up game audio
 	player_bullet_sound.loadSound("player_bullet.wav");
 	player_bullet_sound.setVolume(5);
@@ -122,27 +119,6 @@ void ofApp::update_bullets_vector() {
 	check_hit();
 }
 
-// consistently updates the amount of extra life bonuses that exist in the game. 
-void ofApp::update_power_ups() {
-	// loop through each bonus to manage them all
-	for (int i = extra_lives_.size() - 1; i >= 0; i--) {
-		// update the extra life
-		extra_lives_.at(i).update();
-		// check when extra life collides with player
-		if (ofDist(extra_lives_.at(i).position_.x, extra_lives_.at(i).position_.y,
-			player_.position_.x, player_.position_.y) < (player_.height_ / 5)) {
-			// increment player life
-			extra_lives_.erase(extra_lives_.begin() + i);
-			player_.lives++;
-		}
-		// check when a power up goes off screen
-		if (extra_lives_.at(i).position_.y - extra_lives_.at(i).width_ / 2 > ofGetHeight()) {
-			// when extra life about to go out screen, erase it from vector
-			extra_lives_.erase(extra_lives_.begin() + i);
-		}
-	}
-}
-
 //--------------------------------------------------------------
 // constantly check for changes with player or bullet
 // or if new enemy should be spawned or not. 
@@ -151,12 +127,31 @@ void ofApp::update_power_ups() {
 void ofApp::update(){
 	// check current game states
 	if (current_state_ == START) {
+		// if in start state then check if button is pressed to start game
+		if (is_testing_) {
+			osc_tester_.update();
+			if (osc_tester_.start_game_) {
+				std::cout << "start" << endl;
+				current_state_ = IN_GAME;
+				// set up level controller to begin the game
+				level_controller_.setup(ofGetElapsedTimeMillis());
+			}
+		}
 
-	} else if (current_state_ == IN_GAME) {
+	}
+	else if (current_state_ == PAUSED) {
+		if (is_testing_) {
+			// use boolean flag so button unpauses smoothly at one press only
+			if (osc_tester_.pause_game_ && !is_unpaused_button_pressed) {
+				current_state_ = IN_GAME;
+			}
+			is_unpaused_button_pressed = osc_tester_.pause_game_;
+		}
+	}
+	else if (current_state_ == IN_GAME) {
 		// update game objects action
 		player_.update();
 		update_bullets_vector();
-		update_power_ups();
 
 		// get level controller to update and check when to spawn next enemy
 		if (level_controller_.should_spawn_enemy()) {
@@ -187,10 +182,20 @@ void ofApp::update(){
 			player_.is_s_pressed_ = osc_tester_.move_down_;
 			player_.is_d_pressed_ = osc_tester_.move_right_;
 			
-			// check if shoot
-			if (osc_tester_.shoot_) {
+			// check if shoot, make sure only shoots once, 
+			// check boolean flag so only one bullet per one press
+			if (osc_tester_.shoot_ && !is_shoot_button_pressed_) {
+				is_shoot_button_pressed_ = osc_tester_.shoot_;
 				create_player_bullet();
 			}
+			is_shoot_button_pressed_ = osc_tester_.shoot_;
+
+			// check boolean flag so it easily switches to paused state 
+			// once the pause button is pressed
+			if (osc_tester_.pause_game_ && !is_pause_button_pressed) {
+				current_state_ = PAUSED;
+			}
+			is_pause_button_pressed = osc_tester_.pause_game_;
 		}
 	} else if (current_state_ == END) {
 
@@ -217,10 +222,6 @@ void ofApp::draw_in_game() {
 	// draw each enemy in vector
 	for (int i = 0; i < enemies_.size(); i++) {
 		enemies_.at(i).draw();
-	}
-	// draw each power up in vector
-	for (int i = 0; i < extra_lives_.size(); i++) {
-		extra_lives_.at(i).draw();
 	}
 
 	// draw game score on top of the screen
