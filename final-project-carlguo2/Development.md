@@ -41,5 +41,17 @@ Added a shoot sound to my game. Will also add a game over and game start sound e
 Will try to find better way to credit the assets I got since I just pulled them out of google images. Will start working on ofxOSC portion
 of the code.
 ***
-### Code Review 3
+### Presentation
+##### Monday (4/30/18) -
+I added on the osc addon and also created some catch tests. These catch tests are made to test if collision works or not. I had some problems with
+visual studio not being able to run it but I saw online that I needed to make another configuration to do it.
 
+##### Tuesday (5/1/18) -
+I finally managed to implement the osc addon and get it to send messages. I first tried to see if I could get the player to remotely move left
+from my phone. It took me a very long time to realize that I could do it from iphone hotspot.I had to use hotspot to sync my touchosc interface
+from the touchosc desktop editor to my phone touchosc interface. Once I managed to get the correct IP address and the connection to work,
+I started editing my touchosc interface in order to look more controller like. The touchosc interface file is on the github. After a lot of trial 
+and error I managed to get the controller to look the way I wanted it to. Also took out the extra life feature because that would take too long to implement.
+
+##### Wednesday (5/2/18)
+I cleaned up the code a bit so it is free of hard coded strings and magic numbers. Also filled out the readme and finalized the development.md

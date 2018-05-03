@@ -28,3 +28,6 @@ make games and code in Unity. I am not completely sure if Unity will be entirely
 new game engine library, but I believe the experience I have with Unity will prove useful. I have also programmed
 a very similar game using javascript before in high school and may use that as reference for creating my base game.
 
+
+### Update 
+I took out the power up feature and used the osc addon to make a remote controller to play the game from there.

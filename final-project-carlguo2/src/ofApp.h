@@ -75,7 +75,7 @@ private:
 	void addScoreToHighScore(int new_score);
 
 	// private tester 
-	bool is_testing_ = true;
+	bool is_testing_ = false;
 	oscCommunicator osc_tester_;
 
 	// flag for buttons so only registers for one push
