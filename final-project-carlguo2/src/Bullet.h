@@ -13,6 +13,8 @@ public:
 	bool from_player_;
 	//image of bullet
 	ofImage* b_img_;
+	float b_draw_x_;
+	float b_draw_y_;
 
 	void setup(ofImage* img, bool is_players, double speed, ofPoint pos);
 	void update();

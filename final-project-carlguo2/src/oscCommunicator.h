@@ -11,8 +11,21 @@ private:
 	// ports that send and receive data
 	int sender_port_ = 8000;
 	int receiver_port_ = 8001;
+
 	// root of messages to be sent
 	std::string message_address_root_ = "/game";
+	// string messages of commands
+	std::string left_message = "/game/move_left";
+	std::string right_message = "/game/move_right";
+	std::string up_message = "/game/move_up";
+	std::string down_message = "/game/move_down";
+	std::string left_down_message = "/game/diag/left_down";
+	std::string right_down_message = "/game/diag/right_down";
+	std::string left_up_message = "/game/diag/left_up";
+	std::string right_up_message = "/game/diag/right_up";
+	std::string shoot_message = "/game/shoot";
+	std::string start_message = "/game/start";
+	std::string pause_message = "/game/pause";
 
 public:
 	ofxOscReceiver receiver_;

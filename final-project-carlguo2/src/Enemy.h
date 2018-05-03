@@ -6,6 +6,11 @@
 class Enemy {
 public:
 	ofPoint position_;
+	//enemy start positions
+	float enemy_start_x_left_lim_;
+	float enemy_start_x_right_lim_;
+	float enemy_start_y;
+
 	float speed_;
 	float width_;
 	ofImage* img_;

@@ -20,42 +20,42 @@ void oscCommunicator::update() {
 		receiver_.getNextMessage(&m);
 
 		// check if message is to move left
-		if (m.getAddress() == "/game/move_left") {  //todo: split this stuff into methods so stick to DRY principle
+		if (m.getAddress() == left_message) {  
 			// update the get left boolean
 			move_left_ = m.getArgAsInt(0);
 		}
-		if (m.getAddress() == "/game/move_right") {
+		if (m.getAddress() == right_message) {
 			move_right_ = m.getArgAsInt(0);
 		}
-		if (m.getAddress() == "/game/move_up") {
+		if (m.getAddress() == up_message) {
 			move_up_ = m.getArgAsInt(0);
 		}
-		if (m.getAddress() == "/game/move_down") {
+		if (m.getAddress() == down_message) {
 			move_down_ = m.getArgAsInt(0);
 		}
-		if (m.getAddress() == "/game/diag/left_down") {
+		if (m.getAddress() == left_down_message) {
 			move_left_ = m.getArgAsInt(0);
 			move_down_ = m.getArgAsInt(0);
 		}
-		if (m.getAddress() == "/game/diag/right_down") {
+		if (m.getAddress() == right_down_message) {
 			move_right_ = m.getArgAsInt(0);
 			move_down_ = m.getArgAsInt(0);
 		}
-		if (m.getAddress() == "/game/diag/left_up") {
+		if (m.getAddress() == left_up_message) {
 			move_left_ = m.getArgAsInt(0);
 			move_up_ = m.getArgAsInt(0);
 		}
-		if (m.getAddress() == "/game/diag/right_up") {
+		if (m.getAddress() == right_up_message) {
 			move_right_ = m.getArgAsInt(0);
 			move_up_ = m.getArgAsInt(0);
 		}
-		if (m.getAddress() == "/game/shoot") {
+		if (m.getAddress() == shoot_message) {
 			shoot_ = m.getArgAsInt(0);
 		}
-		if (m.getAddress() == "/game/start") {
+		if (m.getAddress() == start_message) {
 			start_game_ = m.getArgAsInt(0);
 		}
-		if (m.getAddress() == "/game/pause") {
+		if (m.getAddress() == pause_message) {
 			pause_game_ = m.getArgAsInt(0);
 		}
 	}

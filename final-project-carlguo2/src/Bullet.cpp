@@ -20,7 +20,9 @@ void Bullet::update() {
 }
 
 void Bullet::draw() {
-	b_img_->draw(position_.x - b_width_ / 2, position_.y - b_width_ / 2);
+	b_draw_x_ = position_.x - b_width_ / 2;
+	b_draw_y_ = position_.y - b_width_ / 2;
+	b_img_->draw(b_draw_x_, b_draw_y_);
 }
 
 // new methods used for collision test

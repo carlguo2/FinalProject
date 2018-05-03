@@ -8,28 +8,30 @@ void ofApp::setup(){
 	score_ = 0;
 
 	// set up start screen and load
-	game_screen_img_.load("start_screen.png");
+	game_screen_img_.load(screen_file_name);
 	// set up game font
-	game_font_.load("Gota_Light.otf", 35);
+	game_font_.load(font_type, font_size);
 	// smaller font
-	small_game_font_.load("Gota_Light.otf", 28);
+	small_game_font_.load(font_type, smaller_font_size);
 
 	// instantiate player image
-	player_img_.load("player.png");  //TODO: turn this into a constant
-	player_.setup(&player_img_, ofGetWidth() / 2,
-		ofGetHeight() - player_img_.getHeight() / 2, 5);
+	player_img_.load(player_img_name);  
+	float player_x_pos_start = ofGetWidth() / 2;
+	float player_y_pos_start = ofGetHeight() - player_img_.getHeight() / 2;
+	player_.setup(&player_img_, player_x_pos_start,
+		player_y_pos_start, player_speed_);
 
 	// instantiate enemy 
 	max_enemy_shoot_interval_ = 1.5;
-	enemy_img_.load("enemy.png");
+	enemy_img_.load(enemy_image_name_);
 
 	// instantiate bullet images
-	player_bullet_img_.load("player_bullet.png");  // TODO: turn string to constant
-	enemy_bullet_img_.load("enemy_bullet.png");
+	player_bullet_img_.load(player_bullet_img_name_);  
+	enemy_bullet_img_.load(enemy_bullet_img_name_);
 
 	// set up game audio
-	player_bullet_sound.loadSound("player_bullet.wav");
-	player_bullet_sound.setVolume(5);
+	player_bullet_sound.loadSound(sound_file_name);
+	player_bullet_sound.setVolume(sound_vol);
 
 	// set up osc tester
 	osc_tester_ = oscCommunicator();
@@ -40,8 +42,9 @@ void ofApp::setup(){
 void ofApp::create_enemy_bullet(Enemy e) {
 	Bullet b;
 	// create the "enemy" bullet to setup
-	// TODO: change magic number
-	b.setup(&enemy_bullet_img_, false, e.speed_ + 3, e.position_);
+	// use an offset so bullet moves faster than the enemy when fired
+	double b_speed_offset = 3;
+	b.setup(&enemy_bullet_img_, false, e.speed_ + b_speed_offset, e.position_);
 	bullets_.push_back(b);
 }
 
@@ -71,13 +74,9 @@ void ofApp::check_hit() {
 		// check if bullets are from the enemy
 		if (!bullets_.at(b).from_player_) {
 			if (player_.did_hit_player(bullets_.at(b), player_)) {
-				//erase bullet and decrement player life
+				//erase bullet and set state to END player life
 				bullets_.erase(bullets_.begin() + b);
-				player_.lives--;
-				// if player life is 0 then switch to end gamestate
-				if (player_.lives <= 0) {
-					current_state_ = END;
-				}
+				current_state_ = END;
 			}
 		}
 		else {
@@ -107,9 +106,11 @@ void ofApp::update_bullets_vector() {
 		// update all the bullets
 		bullets_.at(i).update();
 		// check when a bullet goes out of screen   
-		// TODO: Get rid of magic numbers
-		if (bullets_.at(i).position_.y - bullets_.at(i).b_width_ / 8 < 0 ||
-			bullets_.at(i).position_.y - bullets_.at(i).b_width_ / 8 > ofGetHeight()) {
+		float offscreen_limit = bullets_.at(i).position_.y -
+			bullets_.at(i).b_width_ / 8;
+
+		if (offscreen_limit < 0 ||
+			offscreen_limit > ofGetHeight()) {
 			// when bullet about to go out screen, erase it from vector
 			bullets_.erase(bullets_.begin() + i);
 		}
@@ -181,10 +182,10 @@ void ofApp::update(){
 		// update the osc tester when testing boolean is true
 		if (is_testing_) {
 			osc_tester_.update();
-			player_.is_w_pressed_ = osc_tester_.move_up_;
-			player_.is_a_pressed_ = osc_tester_.move_left_;
-			player_.is_s_pressed_ = osc_tester_.move_down_;
-			player_.is_d_pressed_ = osc_tester_.move_right_;
+			player_.is_up_key_pressed_ = osc_tester_.move_up_;
+			player_.is_left_key_pressed_ = osc_tester_.move_left_;
+			player_.is_down_key_pressed_ = osc_tester_.move_down_;
+			player_.is_right_key_pressed_ = osc_tester_.move_right_;
 			
 			// check if shoot, make sure only shoots once, 
 			// check boolean flag so only one bullet per one press
@@ -327,7 +328,9 @@ std::string ofApp::getHighScoreStr() {
 // resets all values once game is restarted
 void ofApp::reset() {
 	// resets all objects in the game and scores in game
-	player_.reset(ofGetWidth() / 2, ofGetHeight() - player_img_.getHeight() / 2);
+	float player_x_pos_start = ofGetWidth() / 2;
+	float player_y_pos_start = ofGetHeight() - player_img_.getHeight() / 2;
+	player_.reset(player_x_pos_start, player_y_pos_start);
 	bullets_.clear();
 	enemies_.clear();
 	score_ = 0;
@@ -339,13 +342,13 @@ void ofApp::reset() {
 void ofApp::keyPressed(int key){
 	// set key 'p' for pause or unpause, this works only 
 	// in the in game gamestate and paused gamestate
-	if (key == 'p' && current_state_ != END && current_state_ != START) {
+	if (key == pause_key && current_state_ != END && current_state_ != START) {
 		// Pause or unpause
 		current_state_ = (current_state_ == IN_GAME) ? PAUSED : IN_GAME;
 	}
 
 	if (current_state_ == START) {
-		if (key == 's') {
+		if (key == start_key) {
 			// move state to in game
 			current_state_ = IN_GAME;
 			// set up level controller to begin the game
@@ -353,23 +356,22 @@ void ofApp::keyPressed(int key){
 		}
 	}
 	// check for the movement buttons
-	// TODO: create constants for these chars
 	if (current_state_ == IN_GAME) {
-		if (key == 'w') {
-			player_.is_w_pressed_ = true;
+		if (key == up_key) {
+			player_.is_up_key_pressed_ = true;
 		}
-		if (key == 'a') {
-			player_.is_a_pressed_ = true;
+		if (key == down_key) {
+			player_.is_left_key_pressed_ = true;
 		}
-		if (key == 's') {
-			player_.is_s_pressed_ = true;
+		if (key == left_key) {
+			player_.is_down_key_pressed_ = true;
 		}
-		if (key == 'd') {
-			player_.is_d_pressed_ = true;
+		if (key == right_key) {
+			player_.is_right_key_pressed_ = true;
 		}
 	}
 	else if (current_state_ == END) {
-		if (key == 'r') {
+		if (key == restart_key) {
 			// reset the state of everything
 			reset();
 			// move state to in game
@@ -377,7 +379,7 @@ void ofApp::keyPressed(int key){
 			// set up level controller to begin the game
 			level_controller_.setup(ofGetElapsedTimeMillis());
 		}
-		else if (key == 'c') {
+		else if (key == close_key) {
 			// exit the app
 			OF_EXIT_APP(0);
 		}
@@ -390,18 +392,17 @@ void ofApp::keyReleased(int key){
 	// check current game states
 	if (current_state_ == IN_GAME) {
 		// check if key released for movement buttons
-		// TODO: create constants for these chars
-		if (key == 'w') {
-			player_.is_w_pressed_ = false;
+		if (key == up_key) {
+			player_.is_up_key_pressed_ = false;
 		}
-		if (key == 'a') {
-			player_.is_a_pressed_ = false;
+		if (key == left_key) {
+			player_.is_left_key_pressed_ = false;
 		}
-		if (key == 's') {
-			player_.is_s_pressed_ = false;
+		if (key == down_key) {
+			player_.is_down_key_pressed_ = false;
 		}
-		if (key == 'd') {
-			player_.is_d_pressed_ = false;
+		if (key == right_key) {
+			player_.is_right_key_pressed_ = false;
 		}
 	}
 }
@@ -412,14 +413,14 @@ void ofApp::mousePressed(int x, int y, int button){
 		// make sure that player can't shoot when at a certain close
 		// distance from enemy. This cuts down on a bug that makes
 		// the game crash.
-		if (button == 0 && !is_mouse_pressed) {
+		if (button == 0 && !is_shoot_key_pressed) {
 			create_player_bullet();
-			is_mouse_pressed = true;
+			is_shoot_key_pressed = true;
 		}
 	}
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button) {
-	is_mouse_pressed = false;
+	is_shoot_key_pressed = false;
 }
